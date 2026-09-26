@@ -12,7 +12,7 @@
     "test": "npm run test:unit && npm run test:browser"
   },
   "devDependencies": {
-    "playwright": "1.62.1"
+    "playwright": "1.63.0"
   },
   "type": "module"
 }
