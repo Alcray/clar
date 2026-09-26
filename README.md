@@ -1,122 +1,162 @@
 # CLAR
 
-Evidence and media literacy for one Facebook post at a time. CLAR separates checkable claims from opinions, shows retrieved sources, and explains observable persuasion cues with quotations. Use the web app or the Chrome extension, with local models or Google's APIs.
+**Check a Facebook post. See the evidence. Make up your own mind.**
 
-Licensed under [Apache-2.0](LICENSE). Model weights and external publisher content keep their own licenses.
+CLAR helps you check factual claims, recognize opinions, and notice persuasive language. Use it directly in your Facebook feed or paste a post into the web app.
 
-## What is included
+Built first for Moldova, with **Romanian, Russian, and English** support. Run the AI on your own hardware or connect a Google model.
 
-- A compact Facebook result card, optional detailed analysis, EN/RO/RU output, and local result caching.
-- Per-claim assessments, source stances, explicit uncertainty, and fact-check matching that distinguishes a claim from its refutation.
-- Ollama, OpenAI-compatible local endpoints, Gemini API, and Vertex AI Express adapters.
-- A Uvicorn application with bounded requests/jobs, invitation authentication, health checks and a non-root Docker deployment.
-- A [reproducible model benchmark](benchmarks/README.md): fixed evidence, live retrieval, synthetic screenshots, quality metrics and complete request latency.
+[Get started](#get-started) · [Use it in Facebook](#use-it-in-facebook) · [Compare models](#compare-models) · [Latest release](https://github.com/Alcray/clar/releases/latest)
 
-## Quick start: Docker and an existing model server
+![CLAR's compact card showing an assessment, tags, a source link and a Full analysis button](docs/images/compact-card.png)
 
-Requires Docker Engine and Compose v2.24+. Install a model on your inference server first; CLAR does not download weights automatically.
+*Interface preview using synthetic test data.*
+
+## What you can do
+
+- **Check a claim:** see whether the available evidence supports it, contradicts it, or leaves it unresolved.
+- **Open the sources:** follow citations and related fact-checks to read the context yourself.
+- **Notice persuasion:** inspect quoted phrases and explanations of how they may influence a reader.
+- **Stay in your feed:** get a compact result first, then open the full analysis when you want more detail.
+- **Use your preferred model:** connect Ollama, an OpenAI-compatible model server, Gemini API, or Vertex AI.
+
+CLAR can also read text from screenshots. It does not authenticate photographs or analyze video.
+
+## Get started
+
+You’ll need Git and Docker with Compose v2.24 or newer. [Docker Desktop](https://www.docker.com/products/docker-desktop/) includes Compose. Choose **one** AI setup below; Google models do not require a local GPU.
+
+### 1. Download CLAR
 
 ```sh
 git clone https://github.com/Alcray/clar.git
 cd clar
 cp .env.example .env
-# Edit LOCAL_MODEL and OLLAMA_BASE_URL in .env for your inference server.
+```
+
+The `.env` file holds your settings. Open it in a text editor for the next step.
+
+### 2. Choose where the AI runs
+
+<details open>
+<summary><strong>On your computer with Ollama</strong></summary>
+
+Install and start [Ollama](https://ollama.com/download), then download a model. This small vision model is a starting example:
+
+```sh
+ollama pull qwen2.5vl:3b
+```
+
+Keep these settings in `.env`:
+
+```dotenv
+DEFAULT_PROVIDER=local
+LOCAL_PROVIDER=ollama
+LOCAL_MODEL=qwen2.5vl:3b
+OLLAMA_BASE_URL=http://host.docker.internal:11434
+```
+
+Keep Ollama running while you use CLAR. You can choose another installed model by changing `LOCAL_MODEL`; screenshots require a model that can read images.
+
+The address above is for Docker Desktop. **On Linux**, follow the [Ollama networking instructions](docs/SELF-HOSTING.md#docker-compose) or the [NVIDIA container setup](docs/SELF-HOSTING.md#optional-nvidia-ollama-container).
+
+Local checks use a limited collection of public sources. They may leave recent or unrelated claims unresolved.
+
+</details>
+
+<details>
+<summary><strong>With a Google API key</strong></summary>
+
+For the Gemini API, change these settings in `.env`:
+
+```dotenv
+DEFAULT_PROVIDER=gemini
+GEMINI_API_KEY=your_gemini_api_key
+```
+
+For Vertex AI Express, use these instead:
+
+```dotenv
+DEFAULT_PROVIDER=vertex
+VERTEX_API_KEY=your_vertex_api_key
+```
+
+Google modes use Google Search to look for evidence. Selected content is sent to Google, and API usage is billed to your Google account. Your key stays on the CLAR server.
+
+</details>
+
+Already running vLLM, llama.cpp, or another model server? Use the [OpenAI-compatible setup](docs/SELF-HOSTING.md#an-existing-openai-compatible-model-server).
+
+### 3. Start CLAR
+
+Run these commands in order:
+
+```sh
 docker compose build
 docker compose run --rm clar python manage_invites.py create owner
 docker compose up -d clar
 ```
 
-Save the invitation code printed once by the create command. Open [localhost:8765](http://localhost:8765), enter it, and choose **Get CLAR for Chrome** for installation and pairing. The Docker host port is loopback by default. `GET /healthz` checks the app; `GET /readyz` checks model configuration/readiness.
+**Save the access code printed by the second command.** It signs you into the website. You only need to create this owner invitation once.
 
-For Docker Desktop with native Ollama, `OLLAMA_BASE_URL=http://host.docker.internal:11434` reaches the host. On Linux, the host model server must listen on an interface reachable from Docker, or use the optional Ollama service below. Do not expose an unauthenticated model server to the public internet.
+Open **[http://localhost:8765](http://localhost:8765)** and enter your code. Try the prepared example, paste a post, or upload a screenshot.
 
-## Choose your inference provider
+Prefer running Python directly, or want to host CLAR for other people? See the [self-hosting guide](docs/SELF-HOSTING.md) for native installation, HTTPS, GPU setup, and updates.
 
-| Provider | Configuration | Retrieval used by CLAR |
-| --- | --- | --- |
-| Ollama | `DEFAULT_PROVIDER=local`, `LOCAL_PROVIDER=ollama`, `LOCAL_MODEL`, `OLLAMA_BASE_URL` | A limited collection of official documents and verified fact-check records |
-| OpenAI-compatible local server | `DEFAULT_PROVIDER=local`, `LOCAL_PROVIDER=openai`, `LOCAL_MODEL`, `LOCAL_API_BASE_URL` | The same limited collection |
-| Vertex AI Express | `DEFAULT_PROVIDER=vertex`, `VERTEX_MODEL`, `VERTEX_API_KEY` | Google Search grounding and verified fact-check records |
-| Gemini API | `DEFAULT_PROVIDER=gemini`, `GEMINI_MODEL`, `GEMINI_API_KEY` | Google Search grounding and verified fact-check records |
+## Use it in Facebook
 
-For vLLM, llama.cpp or another compatible server, `LOCAL_API_BASE_URL` must end at its API base, for example `http://model-server:8000/v1`. JSON schema output is required. Image input also requires a vision-capable model; text-only models can analyze pasted text. Optional local API credentials use `LOCAL_API_KEY` or the variable named by `LOCAL_API_KEY_ENV`.
+The extension needs a running CLAR server. You can try the web app before installing it.
 
-Local inference does not mean fully offline fact checking: live local analysis retrieves the allowlisted documents in `local_analysis.SOURCES`. `config/sources.json` defines domain priorities and verified page identities. Source coverage differs from Google Search, so local and cloud live results must be compared with that limitation visible.
+1. In the CLAR website, click **Get CLAR for Chrome**. Download the ZIP and extract it into a folder you’ll keep.
+2. In desktop Chrome 141 or later, open `chrome://extensions`, enable **Developer mode**, and choose **Load unpacked**. Select the folder containing `manifest.json`.
+3. Copy the **pairing code** from the website’s extension guide. Open the extension’s **Settings**, select your server, paste the code, and save.
+4. Refresh Facebook. Click **Analyze** below a post, then click its result to open the compact card. Choose **Full analysis** for the evidence and detailed explanation.
 
-For an NVIDIA Docker host, set `OLLAMA_BASE_URL=http://ollama:11434` in `.env`, then:
+The website access code and extension pairing code are different: the website’s guide gives you the pairing code after you sign in.
 
-```sh
-docker compose --profile gpu up -d ollama
-docker compose exec ollama ollama pull qwen2.5vl:3b
-docker compose up -d clar
-```
+Automatic feed scanning is optional and starts off. Reopening a completed check uses the saved result; you can clear saved checks in Settings.
 
-The profile reserves one GPU and does not publish the Ollama port. Choose model size, quantization and context to fit your hardware. On Apple Silicon, run Ollama natively. Full configuration, HTTPS, native installation, backups and operational limits are in [SELF-HOSTING.md](docs/SELF-HOSTING.md).
+For a server on another computer or an extension update, follow the [extension guide](extension/README.md). The release ZIP targets localhost; a remote server needs a package built for its address.
 
-## Build an extension for your server
+## Compare models
 
-The default package targets localhost and selects local inference. A custom build packages its permitted server origins into the settings list, Chrome permissions and CSP together:
+CLAR includes a benchmark so you can compare **quality, speed, and failures** before choosing a model.
 
-```sh
-python3 tools/build_extension.py \
-  --backend https://clar.example.org \
-  --default-provider local \
-  --output-dir dist/extension \
-  --archive dist/clar-extension.zip
-```
+- **Fixed evidence:** every model gets the same post and source excerpts.
+- **Live checks:** models run through CLAR’s actual research and assessment process.
+- **Screenshots:** measure text recognition as well as the assessment.
 
-For Docker, set `CLAR_BACKEND=https://clar.example.org` before building so the download served by that image targets your address. HTTPS is required for remote extension backends; HTTP is supported for localhost. API keys are never packaged. See the [extension guide](extension/README.md).
+Start with the [benchmark guide](benchmarks/README.md) for commands and model configuration. You can also browse the [published measurements](docs/benchmarks/2026-09-26/README.md), including unsuccessful responses.
 
-## Compare model quality and speed
-
-The benchmark has separate `fixed` and `live` tracks. The fixed track gives every model the same synthetic evidence, including distractors. The live track evaluates the actual pipeline and records its retrieval regime. Neither uses the application result cache.
+To check that the dataset is ready without making model calls:
 
 ```sh
-python3 -m benchmarks validate
-python3 -m benchmarks run \
-  --matrix benchmarks/matrix.example.json \
-  --models flash-low,flash-lite-minimal \
-  --track fixed --repetitions 3 --warmups 1 --concurrency 1 \
-  --save-responses --out .runtime/benchmarks/comparison
+docker compose run --rm clar python -m benchmarks validate
 ```
 
-The same harness is included in the image: `docker compose run --rm clar python -m benchmarks validate`. Give container benchmark runs an explicit writable output path such as `--out /data/benchmarks/run-1`.
+The starter cases have editorial labels and are intended for development. Their scores are not independent proof of real-world accuracy.
 
-Export the credentials named by the matrix before running. For existing local inference, select `qwen-vl-local` and edit its endpoint/model first. Use `--dry-run` to validate a plan without model calls, and `--modality image` for the six screenshot cases. Start with a filtered subset before a paid full run.
+## If something isn’t working
 
-Initial real measurements are published in [the benchmark results](docs/benchmarks/2026-09-26/README.md), including failures and the exact run configurations.
+| What you see | What to check |
+| --- | --- |
+| CLAR cannot reach the local model | Make sure Ollama is running, the model has been downloaded, and `OLLAMA_BASE_URL` is reachable from Docker. See [network setup](docs/SELF-HOSTING.md#docker-compose). |
+| The website asks for an access code | Use the code printed when you created the owner invitation. The extension pairing code is a separate credential. |
+| The extension has no Analyze button | Refresh Facebook after installation. You can also select text from one post and use the CLAR right-click menu. |
+| You changed the server address | Rebuild and reload the extension for the new address. See [building for your server](extension/README.md#build-for-your-server). |
 
-Results include JSONL records, JSON summaries and a Markdown comparison with completion rate, quality, citations, false accusations, coverage, OCR, p50/p95 latency and paired uncertainty estimates. Failed requests are reported separately from quality. There is no invented first-token latency or calibrated confidence score. The [benchmark guide](benchmarks/README.md) explains dataset provenance, scoring, limits, and how to add independently reviewed cases.
+For a reproducible bug, [open an issue](https://github.com/Alcray/clar/issues) with a public or synthetic example. Leave out API keys, access codes, and private Facebook content.
 
-## Development
+## Privacy and limitations
 
-Python 3.10+ is supported on Linux/macOS. Browser tests use Node 24 and Playwright.
+CLAR can be wrong. Read its sources before relying on a result. An official source can make an unsupported claim, and persuasive language alone does not prove deception.
 
-```sh
-python3 -m venv .venv
-. .venv/bin/activate
-pip install -r requirements-server.txt
-python tools/build_extension.py
-# For native Ollama, use http://127.0.0.1:11434 rather than Docker's host name.
-python -m app
-```
+The extension sends selected content to your configured server. Google modes use Google’s services; local mode uses the model server you choose and may still fetch public evidence pages. See [PRIVACY.md](PRIVACY.md) for caching and feedback details.
 
-Use `python -m app` for deployment. `python server.py` remains a legacy preview/test entry point.
+Self-hosting currently supports one application instance. The [deployment guide](docs/SELF-HOSTING.md#operation-and-limits) covers authentication, backups, and operating limits.
 
-```sh
-python -m unittest discover -s tests -q
-python -m benchmarks validate
-npm ci
-npx playwright install chromium
-npm test
-```
+## Contribute
 
-The normal tests use synthetic posts and mocked providers. The benchmark live track makes real model calls using the operator-configured credentials. See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
+Bug reports, clearer explanations, translations, model integrations, and reviewed benchmark cases are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md). For vulnerabilities, follow [SECURITY.md](SECURITY.md).
 
-## Operational and quality limits
-
-CLAR currently supports one application process and one replica. In-memory jobs and file-backed state are bounded; a shared durable queue/database is needed for horizontal scaling. A restart loses pending jobs. Public mode requires invitations and enforces configured daily limits. Store runtime data and credentials privately and terminate public HTTPS at a reverse proxy.
-
-Assessments are fallible. An official origin does not establish truth, persuasion does not prove coordinated propaganda, and an advertisement is not automatically fraud. The starter benchmark has editorial development labels; it is not independent human validation or a production accuracy certification. Screenshots are transcribed, not authenticated. Facebook can change its DOM and break extraction.
-
-See [PRIVACY.md](PRIVACY.md) for what leaves the browser, what is cached, and what feedback is stored.
+Licensed under [Apache-2.0](LICENSE). External model weights and publisher content keep their own licenses.
