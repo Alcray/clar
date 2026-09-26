@@ -6,7 +6,7 @@ CLAR helps you check factual claims, recognize opinions, and notice persuasive l
 
 Built first for Moldova, with **Romanian, Russian, and English** support. Run the AI on your own hardware or connect a Google model.
 
-[Get started](#get-started) · [Use it in Facebook](#use-it-in-facebook) · [Compare models](#compare-models) · [Latest release](https://github.com/Alcray/clar/releases/latest)
+[Install with your AI](#install-by-asking-your-ai) · [Manual setup](#get-started) · [Use it in Facebook](#use-it-in-facebook) · [Compare models](#compare-models) · [Latest release](https://github.com/Alcray/clar/releases/latest)
 
 ![CLAR's compact card showing an assessment, tags, a source link and a Full analysis button](docs/images/compact-card.png)
 
@@ -21,6 +21,34 @@ Built first for Moldova, with **Romanian, Russian, and English** support. Run th
 - **Use your preferred model:** connect Ollama, an OpenAI-compatible model server, Gemini API, or Vertex AI.
 
 CLAR can also read text from screenshots. It does not authenticate photographs or analyze video.
+
+## Install by asking your AI
+
+Copy this into an AI assistant that can work with your terminal and files:
+
+```text
+Please install CLAR on this computer so I can check posts in its web app and Facebook Chrome extension:
+https://github.com/Alcray/clar
+
+Read the project's README, self-hosting guide, and extension guide. Check my operating system, available hardware, and installed tools, then carry out the setup. Reuse an existing CLAR installation and configuration if there is one.
+
+Help me choose an available model that fits my hardware through Ollama or an existing model server, or use Gemini/Vertex if I prefer a Google API. Ask for my preference if it isn't clear. Use an image-capable model if I want to check screenshots. Configure the selected model and its connection; if a key is needed, help me store it privately on the server. Keep credentials out of Git, logs, and the extension package.
+
+Create an invitation if needed and help me save the website access code, then start CLAR for access from this computer. Verify that both the app and the model work with a harmless sample post. Diagnose and fix any setup errors you encounter.
+
+Prepare the Chrome extension for the correct server address and help me install and pair it with the same server and model provider. Explain which code signs me into the website and which code pairs the extension. If a Chrome step requires my input, give me the exact folder, button, or setting to use.
+
+Finish by giving me the working app URL, how to check my first Facebook post, and how to stop, restart, and update my installation. Tell me clearly if anything remains unverified or needs my help.
+```
+
+Already installed and need help? Copy this, then describe the problem:
+
+```text
+Help me troubleshoot my CLAR installation: https://github.com/Alcray/clar
+Read the project documentation, inspect my installation and relevant logs, identify the cause, and fix it where you can. Preserve my existing settings and saved data, keep credentials private, and verify that the affected feature works afterward. Ask only for information you cannot determine from the installation.
+
+Here is what is happening: [describe the problem or paste the error, without passwords or API keys]
+```
 
 ## Get started
 
