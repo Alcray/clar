@@ -6,6 +6,7 @@ import datetime
 import hashlib
 import importlib
 import json
+import math
 import multiprocessing
 import os
 import platform
@@ -91,7 +92,89 @@ def _error(exc):
     # Exception text/provider responses can contain keys, URLs, or headers. Never save them.
     code = getattr(exc, 'code', None)
     safe_code = code if isinstance(code, str) and re.fullmatch(r'[a-zA-Z0-9_:-]{1,80}', code) else type(exc).__name__
-    return {'type': type(exc).__name__, 'code': safe_code}
+    error = {'type': type(exc).__name__, 'code': safe_code}
+    if isinstance(exc, OutputValidationError):
+        error['reason'] = exc.reason
+    return error
+
+
+def _bounded_invalid_response(value, limit=65536):
+    """Keep only parsed task fields, never a provider envelope or its headers."""
+    truncated = False
+
+    def scalar(item, maximum=2048):
+        nonlocal truncated
+        if item is None or type(item) is bool:
+            return item
+        if type(item) in (int, float):
+            if abs(item) > 1e100 or not math.isfinite(item):
+                truncated = True
+                return None
+            return item
+        if not isinstance(item, str):
+            truncated = True
+            return None
+        # Bound serialized bytes, including JSON escaping and multibyte text.
+        lo, hi = 0, len(item)
+        while lo < hi:
+            mid = (lo + hi + 1) // 2
+            if len(json.dumps(item[:mid], ensure_ascii=False).encode()) <= maximum:
+                lo = mid
+            else:
+                hi = mid - 1
+        if lo < len(item):
+            truncated = True
+        return item[:lo]
+
+    def sequence(items, maximum, clean):
+        nonlocal truncated
+        if not isinstance(items, list):
+            return scalar(items)
+        if len(items) > maximum:
+            truncated = True
+        return [clean(item) for item in items[:maximum]]
+
+    def statement(item):
+        nonlocal truncated
+        if not isinstance(item, dict):
+            return scalar(item)
+        allowed = {'text', 'kind', 'verdict', 'confidence', 'evidence_ids'}
+        if set(item) - allowed:
+            truncated = True
+        return {key: sequence(field, 8, lambda v: scalar(v, 128)) if key == 'evidence_ids'
+                else scalar(field, 2048 if key == 'text' else 128)
+                for key, field in item.items() if key in allowed}
+
+    def technique(item):
+        nonlocal truncated
+        if not isinstance(item, dict):
+            return scalar(item)
+        if set(item) - {'type', 'quote'}:
+            truncated = True
+        return {key: scalar(field, 2048 if key == 'quote' else 128)
+                for key, field in item.items() if key in {'type', 'quote'}}
+
+    clean = {}
+    allowed = {'statements', 'purpose', 'techniques', 'fraud_signal', 'original_text'}
+    if set(value) - allowed:
+        truncated = True
+    for key, field in value.items():
+        if key == 'statements':
+            clean[key] = sequence(field, 12, statement)
+        elif key == 'techniques':
+            clean[key] = sequence(field, 8, technique)
+        elif key in allowed:
+            clean[key] = scalar(field, 4096 if key == 'original_text' else 256)
+    # Enforce the overall bound even when many individually bounded fields remain.
+    while len(json.dumps(clean, ensure_ascii=False).encode()) > limit:
+        truncated = True
+        lists = [(len(json.dumps(v, ensure_ascii=False).encode()), k) for k, v in clean.items() if isinstance(v, list) and v]
+        if lists:
+            clean[max(lists)[1]].pop()
+        else:
+            key = max(clean, key=lambda k: len(json.dumps(clean[k], ensure_ascii=False).encode()))
+            clean.pop(key)
+    return clean, truncated
 
 
 def normalize_live(result):
@@ -136,6 +219,7 @@ def execute_case(model, case, save_responses=False, emit=None):
     telemetry, progress = {'cache_policy': 'application_and_source_caches_bypassed'}, []
     started = time.perf_counter()
     row = {'status': 'error', 'started_at': utcnow()}
+    result = None
     try:
         runtime = importlib.import_module('model_runtime')
         config = runtime.ModelConfig(**{k: v for k, v in model.items() if k in CONFIG_FIELDS})
@@ -177,6 +261,8 @@ def execute_case(model, case, save_responses=False, emit=None):
     except Exception as exc:
         row['status'] = 'invalid_output' if isinstance(exc, (OutputValidationError, json.JSONDecodeError)) or getattr(exc, 'code', '') in ('invalid_json', 'schema_validation', 'invalid_output', 'schema_invalid') else 'error'
         row['error'] = _error(exc)
+        if save_responses and case['track'] == 'fixed' and isinstance(exc, OutputValidationError) and isinstance(result, dict):
+            row['invalid_response'], row['invalid_response_truncated'] = _bounded_invalid_response(result)
     row['duration_seconds'] = time.perf_counter() - started
     row['telemetry'] = _safe_telemetry(telemetry)
     row['progress'] = progress

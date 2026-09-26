@@ -38,8 +38,9 @@ def write_report(directory, summary):
         lines.append('| {} | {} | {} | {} | {} | {} | {} | {} |'.format(text(name), pct(group['completion_rate']), pct(group['citation_id_validity']),
                      pct(group['citation_relevance']), pct(group['citation_coverage']), pct(group['statement_quote_compliance']),
                      pct(group['technique_quote_compliance']), pct(group['purpose_accuracy'])))
+    for name, group in summary['groups'].items():
         if group['failure_codes']:
-            lines += ['', '{} failures: `{}`.'.format(text(name), json.dumps(group['failure_codes'], sort_keys=True)), '']
+            lines += ['', '{} failures: `{}`.'.format(text(name), json.dumps(group['failure_codes'], sort_keys=True))]
     lines += ['', '## By language', '', '| Model / track | Language | Completed | Kind macro F1 | Verdict macro F1 | p50 s | p95 s |',
               '|---|---|---:|---:|---:|---:|---:|']
     for name, group in summary['groups'].items():
@@ -72,7 +73,7 @@ def write_report(directory, summary):
             lines.append('| {} | {} | {} | {} | {} | {} | {} |'.format(row['track'], text(row['left']), text(row['right']), row['metric'],
                          num(row['difference_right_minus_left']), '—' if interval is None else '[{}, {}]'.format(num(interval[0]), num(interval[1])), row['semantic_clusters']))
     lines += ['', '## Interpretation', '',
-              '- Full adapter duration includes pipeline extraction, retrieval, assessment, retries, and formatting. Process startup and benchmark queue waiting are recorded separately. No time-to-first-token number is inferred.',
+              '- Fixed-track duration covers one model request with supplied evidence, with no search or harness retry. Live-track duration covers the full CLAR pipeline: extraction, retrieval, assessment, its retries, and formatting. Process startup and benchmark queue waiting are recorded separately. No time-to-first-token number is inferred.',
               '- Unknown token usage remains unknown. Cost is not estimated without a pinned price sheet and provider billing information.',
               '- An existing evidence ID is not proof of entailment. Relevant-citation scores compare editorial claim/evidence associations; real entailment still needs human review.',
               '- Live cases expose retrieved URLs and dated labels. Search drift, different retrieval corpora, and publisher changes can explain score differences. Live media-purpose scores are disabled because those reused demo labels were not curated for that task.',

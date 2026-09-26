@@ -84,6 +84,8 @@ The same harness is included in the image: `docker compose run --rm clar python 
 
 Export the credentials named by the matrix before running. For existing local inference, select `qwen-vl-local` and edit its endpoint/model first. Use `--dry-run` to validate a plan without model calls, and `--modality image` for the six screenshot cases. Start with a filtered subset before a paid full run.
 
+Initial real measurements are published in [the benchmark results](docs/benchmarks/2026-09-26/README.md), including failures and the exact run configurations.
+
 Results include JSONL records, JSON summaries and a Markdown comparison with completion rate, quality, citations, false accusations, coverage, OCR, p50/p95 latency and paired uncertainty estimates. Failed requests are reported separately from quality. There is no invented first-token latency or calibrated confidence score. The [benchmark guide](benchmarks/README.md) explains dataset provenance, scoring, limits, and how to add independently reviewed cases.
 
 ## Development

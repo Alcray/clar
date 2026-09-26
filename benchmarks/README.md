@@ -92,7 +92,7 @@ OCR metrics report character error rate (CER), word error rate (WER), and exact 
 Each run writes:
 
 - `manifest.json`: configuration/defaults, selected cases, dataset hash, prompt/schema hashes, source-code and retrieval-configuration hashes, concurrency, timeouts, seed and limitations.
-- `records.jsonl`: one measured case/repetition with status, timing, usage when known, scores, error code, and live retrieved URLs/freshness metadata. Full normalized model answers are included only with `--save-responses`.
+- `records.jsonl`: one measured case/repetition with status, timing, usage when known, scores, error code, and live retrieved URLs/freshness metadata. Full normalized model answers are included only with `--save-responses`. When a parsed fixed-track task answer reaches the benchmark validator but fails it, this option retains only bounded task fields as `invalid_response` (at most 64 KiB), with an explicit truncation flag and a stable safe validation reason/code. Such records remain invalid and receive no quality scores. Raw malformed JSON, provider response envelopes, headers and API error bodies are never saved. Earlier runs that discarded invalid answers cannot recover them retrospectively.
 - `warmups.jsonl`: explicitly excluded warmup calls.
 - `summary.json`: full metric counts, confusion matrices, language/category/modality groups and paired differences.
 - `report.md`: a reviewable comparison table, reliability diagnostics and caveats.

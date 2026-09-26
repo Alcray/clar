@@ -1,0 +1,4122 @@
+{
+  "manifest": {
+    "benchmark_version": "1.0.0",
+    "run_id": "2026-09-26T143938.912248+0000-7f3ac887",
+    "created_at": "2026-09-26T14:39:38.912350+00:00",
+    "client_environment": {
+      "python": "3.14.6",
+      "system": "Darwin",
+      "machine": "arm64",
+      "logical_cpus": 10,
+      "hardware_note": ""
+    },
+    "dataset_version": "editorial-v1",
+    "dataset_hash": "3a5d2f7c4a4d1721a5c20fca532eae5afef25b4eefaf169e9a2ace290e618c1a",
+    "selection_hash": "33819638afb662a5e78630dabb33efc86dd541a767428696860c581dacb83eb7",
+    "case_ids": [
+      "calendar-en",
+      "library-closed-ro",
+      "unknown-contract-ru",
+      "pin-refund-ru",
+      "neutral-titles-en",
+      "fear-share-ro"
+    ],
+    "label_status": "Editorial development fixtures; no claim of human validation or unbiased held-out accuracy.",
+    "model_matrix": [
+      {
+        "endpoint": "",
+        "api_key_env": "VERTEX_API_KEY",
+        "thinking": "low",
+        "timeout_seconds": 45,
+        "max_output_tokens": 4096,
+        "context_tokens": 8192,
+        "temperature": null,
+        "name": "flash-low",
+        "provider": "vertex",
+        "model": "gemini-3.5-flash"
+      },
+      {
+        "endpoint": "",
+        "api_key_env": "VERTEX_API_KEY",
+        "thinking": "minimal",
+        "timeout_seconds": 45,
+        "max_output_tokens": 4096,
+        "context_tokens": 8192,
+        "temperature": null,
+        "name": "flash-lite-minimal",
+        "provider": "vertex",
+        "model": "gemini-3.5-flash-lite"
+      }
+    ],
+    "config_hash": "b42b0d1f7293f49d77772452a2c1bdfd513f425e3ff9abc057dddd660349530c",
+    "fixed_prompt_version": "fixed-evidence-v1",
+    "fixed_prompt_hash": "095ca2ee00d22ee232ba50229b6de686e3561210369cc545092895201f5a3f0d",
+    "pipeline_source": {
+      "files": {
+        "analysis.py": "82944849331c7a6d9b618e1186f69dd13cdfbf5b7a133f4dedd28aaf715660e6",
+        "local_analysis.py": "a6c9cbb3df9bb9073f2bd718a54bbc229ee2c2b89afb1eadeb6d3f9235bfa8c0",
+        "media_literacy.py": "3e59b479c9fff58c55edfb2f2e613f53e10991697879b1c7b8a2555116b79106",
+        "factchecks.py": "f35b736f735617bd3583acb28cb2146bfb1b2cc5e8e90a237c1f457b89f33a33",
+        "origins.py": "7360958e4c97b8b9c78715fa3981b4dfb860e2ad9f47d011f3d3530d3fd1015b",
+        "model_runtime.py": "c82fe7e3a90891b1e7927e768dc7c3f0d346ad6187a942de9e2afb2d10a35144",
+        "pipeline_runtime.py": "cc7187576a21dc18ebeb5c6aec38900e676184e33b67232cbfe6a5acd56567c3",
+        "config/sources.json": "d6e8fded784dd60e55c5227c54106f708b6595da2b993674dacd3918bc0736c2",
+        "fixtures/known_debunks.json": "faba7377571cdfa1cc2afbf3dc4cc9d0b3d1789f5430695e419e99ac5cfe7cf3"
+      },
+      "hash": "47e7b51507a6c6001b00b87dfe49f037529ca0e5438ed86ad0cdfd731af7313d"
+    },
+    "repetitions": 3,
+    "warmups": 1,
+    "concurrency": 1,
+    "case_timeout_seconds": 180,
+    "seed": 1729,
+    "cache_policy": "Application result cache bypassed; fixed track has no retrieval. Live adapter must bypass source cache. Provider prompt caching may still apply; usage is recorded when reported.",
+    "latency_definition": "duration_seconds measures adapter execution including its retries/search, excluding harness queue/worker startup. Turnaround includes process startup; queue_wait_seconds is separate. No TTFT is measured.",
+    "timeout_definition": "Deadline includes worker startup. The local worker is terminated; a request already accepted by a remote provider may continue and be billed.",
+    "dataset_warning": "Transparent editorial development fixtures, not independently human-validated gold and not an unbiased held-out score.",
+    "image_scope": "Optional six synthetic screenshot variants, image pixels plus supplied evidence only; plaintext withheld from model input. OCR CER/WER use NFC/casefold/whitespace normalization. These do not measure real feed screenshot generalization.",
+    "save_responses": true
+  },
+  "finished_at": "2026-09-26T14:40:45.233593+00:00",
+  "groups": {
+    "flash-lite-minimal/fixed": {
+      "attempted": 18,
+      "successful": 18,
+      "completion_rate": 1.0,
+      "status_counts": {
+        "ok": 18
+      },
+      "failure_codes": {},
+      "kind": {
+        "accuracy": 0.8095238095238095,
+        "macro_f1": 0.8020833333333333,
+        "n": 21,
+        "per_label": {
+          "factual": {
+            "precision": 0.8823529411764706,
+            "recall": 1.0,
+            "f1": 0.9375,
+            "support": 15
+          },
+          "prediction": {
+            "precision": 0.6666666666666666,
+            "recall": 0.6666666666666666,
+            "f1": 0.6666666666666666,
+            "support": 3
+          }
+        },
+        "confusion": [
+          {
+            "expected": "__extra__",
+            "actual": "factual",
+            "count": 2
+          },
+          {
+            "expected": "__extra__",
+            "actual": "prediction",
+            "count": 1
+          },
+          {
+            "expected": "factual",
+            "actual": "factual",
+            "count": 15
+          },
+          {
+            "expected": "prediction",
+            "actual": "__missing__",
+            "count": 1
+          },
+          {
+            "expected": "prediction",
+            "actual": "prediction",
+            "count": 2
+          }
+        ]
+      },
+      "verdict": {
+        "accuracy": 0.7058823529411765,
+        "macro_f1": 0.5686274509803921,
+        "n": 17,
+        "per_label": {
+          "supported": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 6
+          },
+          "contradicted": {
+            "precision": 0.5454545454545454,
+            "recall": 1.0,
+            "f1": 0.7058823529411765,
+            "support": 6
+          },
+          "insufficient": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 3
+          }
+        },
+        "confusion": [
+          {
+            "expected": "__extra__",
+            "actual": "contradicted",
+            "count": 2
+          },
+          {
+            "expected": "contradicted",
+            "actual": "contradicted",
+            "count": 6
+          },
+          {
+            "expected": "insufficient",
+            "actual": "contradicted",
+            "count": 3
+          },
+          {
+            "expected": "supported",
+            "actual": "supported",
+            "count": 6
+          }
+        ]
+      },
+      "extraction": {
+        "precision": 0.85,
+        "recall": 0.9444444444444444
+      },
+      "factual_coverage": 1.0,
+      "decisive_coverage": 1.0,
+      "abstention_rate": 0.0,
+      "false_accusation_rate": 0.25,
+      "extra_harmful_claims": 2,
+      "false_fraud_accusation_rate": 0.0,
+      "purpose_accuracy": 1.0,
+      "fraud_accuracy": 1.0,
+      "techniques": {
+        "per_type": {
+          "authority_appeal": {
+            "tn": 17,
+            "fp": 1,
+            "f1": 0.0
+          },
+          "conspiracy_framing": {
+            "tn": 18,
+            "f1": null
+          },
+          "emotional_framing": {
+            "tn": 18,
+            "f1": null
+          },
+          "fear_appeal": {
+            "tn": 15,
+            "tp": 3,
+            "f1": 1.0
+          },
+          "unsupported_certainty": {
+            "tn": 16,
+            "fp": 2,
+            "f1": 0.0
+          },
+          "urgency": {
+            "tn": 14,
+            "tp": 3,
+            "fp": 1,
+            "f1": 0.8571428571428571
+          },
+          "us_vs_them": {
+            "tn": 18,
+            "f1": null
+          }
+        },
+        "macro_f1": 0.4642857142857143
+      },
+      "ocr": {
+        "character_error_rate": null,
+        "word_error_rate": null,
+        "exact_normalized_transcription_rate": null,
+        "cases": 0
+      },
+      "statement_quote_compliance": 0.95,
+      "technique_quote_compliance": 0.9,
+      "citation_id_validity": 1.0,
+      "citation_relevance": 0.7058823529411765,
+      "citation_coverage": 1.0,
+      "latency_seconds": {
+        "p50": 1.4784761874998367,
+        "p95": 1.795373504449753,
+        "mean": 1.513877888999913,
+        "min": 1.1188202499997715,
+        "max": 2.123688624999886,
+        "all_attempts_p50": 1.4784761874998367,
+        "all_attempts_p95": 1.795373504449753
+      },
+      "usage": {
+        "input_tokens": {
+          "total_known": 19950,
+          "records_with_usage": 18
+        },
+        "output_tokens": {
+          "total_known": 2078,
+          "records_with_usage": 18
+        },
+        "thinking_tokens": {
+          "total_known": null,
+          "records_with_usage": 0
+        },
+        "cached_input_tokens": {
+          "total_known": null,
+          "records_with_usage": 0
+        },
+        "requests": {
+          "total_known": 18,
+          "records_with_usage": 18
+        }
+      },
+      "counts": {
+        "expected_statements": 18,
+        "extracted_statements": 20,
+        "matched_statements": 17,
+        "factual_expected": 15,
+        "factual_answered": 15,
+        "decisive_verdicts": 15,
+        "abstentions": 0,
+        "nonharmful_statements": 12,
+        "false_accusations": 3,
+        "relevant_citations": 12,
+        "evidence_required_claims": 12,
+        "claims_with_relevant_citation": 12,
+        "statement_quotes_total": 20,
+        "statement_quotes_exact": 19,
+        "citations_total": 17,
+        "citation_relevance_denominator": 17,
+        "citations_valid": 17,
+        "purpose_total": 18,
+        "purpose_correct": 18,
+        "fraud_total": 18,
+        "fraud_correct": 18,
+        "nonfraud_cases": 15,
+        "false_fraud_accusations": 0,
+        "extra_harmful_claims": 2,
+        "technique_quotes_total": 10,
+        "technique_quotes_exact": 9
+      },
+      "by_language": {
+        "en": {
+          "attempted": 6,
+          "successful": 6,
+          "completion_rate": 1.0,
+          "status_counts": {
+            "ok": 6
+          },
+          "failure_codes": {},
+          "kind": {
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "n": 6,
+            "per_label": {
+              "factual": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 6
+              }
+            },
+            "confusion": [
+              {
+                "expected": "factual",
+                "actual": "factual",
+                "count": 6
+              }
+            ]
+          },
+          "verdict": {
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "n": 6,
+            "per_label": {
+              "supported": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 6
+              }
+            },
+            "confusion": [
+              {
+                "expected": "supported",
+                "actual": "supported",
+                "count": 6
+              }
+            ]
+          },
+          "extraction": {
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "factual_coverage": 1.0,
+          "decisive_coverage": 1.0,
+          "abstention_rate": 0.0,
+          "false_accusation_rate": 0.0,
+          "extra_harmful_claims": 0,
+          "false_fraud_accusation_rate": 0.0,
+          "purpose_accuracy": 1.0,
+          "fraud_accuracy": 1.0,
+          "techniques": {
+            "per_type": {
+              "authority_appeal": {
+                "tn": 6,
+                "f1": null
+              },
+              "conspiracy_framing": {
+                "tn": 6,
+                "f1": null
+              },
+              "emotional_framing": {
+                "tn": 6,
+                "f1": null
+              },
+              "fear_appeal": {
+                "tn": 6,
+                "f1": null
+              },
+              "unsupported_certainty": {
+                "tn": 6,
+                "f1": null
+              },
+              "urgency": {
+                "tn": 6,
+                "f1": null
+              },
+              "us_vs_them": {
+                "tn": 6,
+                "f1": null
+              }
+            },
+            "macro_f1": null
+          },
+          "ocr": {
+            "character_error_rate": null,
+            "word_error_rate": null,
+            "exact_normalized_transcription_rate": null,
+            "cases": 0
+          },
+          "statement_quote_compliance": 1.0,
+          "technique_quote_compliance": null,
+          "citation_id_validity": 1.0,
+          "citation_relevance": 1.0,
+          "citation_coverage": 1.0,
+          "latency_seconds": {
+            "p50": 1.4353899790003197,
+            "p95": 1.4923223435000637,
+            "mean": 1.410187368,
+            "min": 1.2440657499992085,
+            "max": 1.4974678329999733,
+            "all_attempts_p50": 1.4353899790003197,
+            "all_attempts_p95": 1.4923223435000637
+          },
+          "usage": {
+            "input_tokens": {
+              "total_known": 6618,
+              "records_with_usage": 6
+            },
+            "output_tokens": {
+              "total_known": 517,
+              "records_with_usage": 6
+            },
+            "thinking_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "cached_input_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "requests": {
+              "total_known": 6,
+              "records_with_usage": 6
+            }
+          },
+          "counts": {
+            "expected_statements": 6,
+            "extracted_statements": 6,
+            "matched_statements": 6,
+            "factual_expected": 6,
+            "factual_answered": 6,
+            "decisive_verdicts": 6,
+            "abstentions": 0,
+            "nonharmful_statements": 6,
+            "false_accusations": 0,
+            "relevant_citations": 6,
+            "evidence_required_claims": 6,
+            "claims_with_relevant_citation": 6,
+            "statement_quotes_total": 6,
+            "statement_quotes_exact": 6,
+            "citations_total": 6,
+            "citation_relevance_denominator": 6,
+            "citations_valid": 6,
+            "purpose_total": 6,
+            "purpose_correct": 6,
+            "fraud_total": 6,
+            "fraud_correct": 6,
+            "nonfraud_cases": 6,
+            "false_fraud_accusations": 0
+          }
+        },
+        "ro": {
+          "attempted": 6,
+          "successful": 6,
+          "completion_rate": 1.0,
+          "status_counts": {
+            "ok": 6
+          },
+          "failure_codes": {},
+          "kind": {
+            "accuracy": 0.7142857142857143,
+            "macro_f1": 0.8333333333333333,
+            "n": 7,
+            "per_label": {
+              "factual": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 3
+              },
+              "prediction": {
+                "precision": 0.6666666666666666,
+                "recall": 0.6666666666666666,
+                "f1": 0.6666666666666666,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "__extra__",
+                "actual": "prediction",
+                "count": 1
+              },
+              {
+                "expected": "factual",
+                "actual": "factual",
+                "count": 3
+              },
+              {
+                "expected": "prediction",
+                "actual": "__missing__",
+                "count": 1
+              },
+              {
+                "expected": "prediction",
+                "actual": "prediction",
+                "count": 2
+              }
+            ]
+          },
+          "verdict": {
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "n": 3,
+            "per_label": {
+              "contradicted": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "contradicted",
+                "actual": "contradicted",
+                "count": 3
+              }
+            ]
+          },
+          "extraction": {
+            "precision": 0.8333333333333334,
+            "recall": 0.8333333333333334
+          },
+          "factual_coverage": 1.0,
+          "decisive_coverage": 1.0,
+          "abstention_rate": 0.0,
+          "false_accusation_rate": 0.0,
+          "extra_harmful_claims": 0,
+          "false_fraud_accusation_rate": 0.0,
+          "purpose_accuracy": 1.0,
+          "fraud_accuracy": 1.0,
+          "techniques": {
+            "per_type": {
+              "authority_appeal": {
+                "tn": 6,
+                "f1": null
+              },
+              "conspiracy_framing": {
+                "tn": 6,
+                "f1": null
+              },
+              "emotional_framing": {
+                "tn": 6,
+                "f1": null
+              },
+              "fear_appeal": {
+                "tp": 3,
+                "tn": 3,
+                "f1": 1.0
+              },
+              "unsupported_certainty": {
+                "tn": 6,
+                "f1": null
+              },
+              "urgency": {
+                "tp": 3,
+                "tn": 3,
+                "f1": 1.0
+              },
+              "us_vs_them": {
+                "tn": 6,
+                "f1": null
+              }
+            },
+            "macro_f1": 1.0
+          },
+          "ocr": {
+            "character_error_rate": null,
+            "word_error_rate": null,
+            "exact_normalized_transcription_rate": null,
+            "cases": 0
+          },
+          "statement_quote_compliance": 0.8333333333333334,
+          "technique_quote_compliance": 0.8333333333333334,
+          "citation_id_validity": 1.0,
+          "citation_relevance": 1.0,
+          "citation_coverage": 1.0,
+          "latency_seconds": {
+            "p50": 1.596108104499308,
+            "p95": 2.0267172292499254,
+            "mean": 1.6583488889997777,
+            "min": 1.4161932079996404,
+            "max": 2.123688624999886,
+            "all_attempts_p50": 1.596108104499308,
+            "all_attempts_p95": 2.0267172292499254
+          },
+          "usage": {
+            "input_tokens": {
+              "total_known": 6576,
+              "records_with_usage": 6
+            },
+            "output_tokens": {
+              "total_known": 751,
+              "records_with_usage": 6
+            },
+            "thinking_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "cached_input_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "requests": {
+              "total_known": 6,
+              "records_with_usage": 6
+            }
+          },
+          "counts": {
+            "expected_statements": 6,
+            "extracted_statements": 6,
+            "matched_statements": 5,
+            "nonharmful_statements": 3,
+            "false_accusations": 0,
+            "relevant_citations": 3,
+            "statement_quotes_total": 6,
+            "statement_quotes_exact": 5,
+            "citations_total": 3,
+            "citation_relevance_denominator": 3,
+            "citations_valid": 3,
+            "technique_quotes_total": 6,
+            "technique_quotes_exact": 5,
+            "purpose_total": 6,
+            "purpose_correct": 6,
+            "fraud_total": 6,
+            "fraud_correct": 6,
+            "nonfraud_cases": 6,
+            "false_fraud_accusations": 0,
+            "factual_expected": 3,
+            "factual_answered": 3,
+            "decisive_verdicts": 3,
+            "abstentions": 0,
+            "evidence_required_claims": 3,
+            "claims_with_relevant_citation": 3,
+            "extra_harmful_claims": 0
+          }
+        },
+        "ru": {
+          "attempted": 6,
+          "successful": 6,
+          "completion_rate": 1.0,
+          "status_counts": {
+            "ok": 6
+          },
+          "failure_codes": {},
+          "kind": {
+            "accuracy": 0.75,
+            "macro_f1": 0.8571428571428571,
+            "n": 8,
+            "per_label": {
+              "factual": {
+                "precision": 0.75,
+                "recall": 1.0,
+                "f1": 0.8571428571428571,
+                "support": 6
+              }
+            },
+            "confusion": [
+              {
+                "expected": "__extra__",
+                "actual": "factual",
+                "count": 2
+              },
+              {
+                "expected": "factual",
+                "actual": "factual",
+                "count": 6
+              }
+            ]
+          },
+          "verdict": {
+            "accuracy": 0.375,
+            "macro_f1": 0.2727272727272727,
+            "n": 8,
+            "per_label": {
+              "contradicted": {
+                "precision": 0.375,
+                "recall": 1.0,
+                "f1": 0.5454545454545454,
+                "support": 3
+              },
+              "insufficient": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "__extra__",
+                "actual": "contradicted",
+                "count": 2
+              },
+              {
+                "expected": "contradicted",
+                "actual": "contradicted",
+                "count": 3
+              },
+              {
+                "expected": "insufficient",
+                "actual": "contradicted",
+                "count": 3
+              }
+            ]
+          },
+          "extraction": {
+            "precision": 0.75,
+            "recall": 1.0
+          },
+          "factual_coverage": 1.0,
+          "decisive_coverage": 1.0,
+          "abstention_rate": 0.0,
+          "false_accusation_rate": 1.0,
+          "extra_harmful_claims": 2,
+          "false_fraud_accusation_rate": 0.0,
+          "purpose_accuracy": 1.0,
+          "fraud_accuracy": 1.0,
+          "techniques": {
+            "per_type": {
+              "authority_appeal": {
+                "fp": 1,
+                "tn": 5,
+                "f1": 0.0
+              },
+              "conspiracy_framing": {
+                "tn": 6,
+                "f1": null
+              },
+              "emotional_framing": {
+                "tn": 6,
+                "f1": null
+              },
+              "fear_appeal": {
+                "tn": 6,
+                "f1": null
+              },
+              "unsupported_certainty": {
+                "tn": 4,
+                "fp": 2,
+                "f1": 0.0
+              },
+              "urgency": {
+                "tn": 5,
+                "fp": 1,
+                "f1": 0.0
+              },
+              "us_vs_them": {
+                "tn": 6,
+                "f1": null
+              }
+            },
+            "macro_f1": 0.0
+          },
+          "ocr": {
+            "character_error_rate": null,
+            "word_error_rate": null,
+            "exact_normalized_transcription_rate": null,
+            "cases": 0
+          },
+          "statement_quote_compliance": 1.0,
+          "technique_quote_compliance": 1.0,
+          "citation_id_validity": 1.0,
+          "citation_relevance": 0.375,
+          "citation_coverage": 1.0,
+          "latency_seconds": {
+            "p50": 1.4727917294999315,
+            "p95": 1.7183381774998452,
+            "mean": 1.473097409999961,
+            "min": 1.1188202499997715,
+            "max": 1.73743554199973,
+            "all_attempts_p50": 1.4727917294999315,
+            "all_attempts_p95": 1.7183381774998452
+          },
+          "usage": {
+            "input_tokens": {
+              "total_known": 6756,
+              "records_with_usage": 6
+            },
+            "output_tokens": {
+              "total_known": 810,
+              "records_with_usage": 6
+            },
+            "thinking_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "cached_input_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "requests": {
+              "total_known": 6,
+              "records_with_usage": 6
+            }
+          },
+          "counts": {
+            "expected_statements": 6,
+            "extracted_statements": 8,
+            "matched_statements": 6,
+            "factual_expected": 6,
+            "factual_answered": 6,
+            "decisive_verdicts": 6,
+            "abstentions": 0,
+            "relevant_citations": 3,
+            "evidence_required_claims": 3,
+            "claims_with_relevant_citation": 3,
+            "extra_harmful_claims": 2,
+            "statement_quotes_total": 8,
+            "statement_quotes_exact": 8,
+            "citations_total": 8,
+            "citation_relevance_denominator": 8,
+            "citations_valid": 8,
+            "technique_quotes_total": 4,
+            "technique_quotes_exact": 4,
+            "purpose_total": 6,
+            "purpose_correct": 6,
+            "fraud_total": 6,
+            "fraud_correct": 6,
+            "nonharmful_statements": 3,
+            "false_accusations": 3,
+            "nonfraud_cases": 3,
+            "false_fraud_accusations": 0
+          }
+        }
+      },
+      "by_category": {
+        "contradicted_fact": {
+          "attempted": 3,
+          "successful": 3,
+          "completion_rate": 1.0,
+          "status_counts": {
+            "ok": 3
+          },
+          "failure_codes": {},
+          "kind": {
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "n": 3,
+            "per_label": {
+              "factual": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "factual",
+                "actual": "factual",
+                "count": 3
+              }
+            ]
+          },
+          "verdict": {
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "n": 3,
+            "per_label": {
+              "contradicted": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "contradicted",
+                "actual": "contradicted",
+                "count": 3
+              }
+            ]
+          },
+          "extraction": {
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "factual_coverage": 1.0,
+          "decisive_coverage": 1.0,
+          "abstention_rate": 0.0,
+          "false_accusation_rate": null,
+          "extra_harmful_claims": 0,
+          "false_fraud_accusation_rate": 0.0,
+          "purpose_accuracy": 1.0,
+          "fraud_accuracy": 1.0,
+          "techniques": {
+            "per_type": {
+              "authority_appeal": {
+                "tn": 3,
+                "f1": null
+              },
+              "conspiracy_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "emotional_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "fear_appeal": {
+                "tn": 3,
+                "f1": null
+              },
+              "unsupported_certainty": {
+                "tn": 3,
+                "f1": null
+              },
+              "urgency": {
+                "tn": 3,
+                "f1": null
+              },
+              "us_vs_them": {
+                "tn": 3,
+                "f1": null
+              }
+            },
+            "macro_f1": null
+          },
+          "ocr": {
+            "character_error_rate": null,
+            "word_error_rate": null,
+            "exact_normalized_transcription_rate": null,
+            "cases": 0
+          },
+          "statement_quote_compliance": 1.0,
+          "technique_quote_compliance": null,
+          "citation_id_validity": 1.0,
+          "citation_relevance": 1.0,
+          "citation_coverage": 1.0,
+          "latency_seconds": {
+            "p50": 1.5924904589992366,
+            "p95": 1.599002220899365,
+            "mean": 1.5581361529996987,
+            "min": 1.4821922500004803,
+            "max": 1.5997257499993793,
+            "all_attempts_p50": 1.5924904589992366,
+            "all_attempts_p95": 1.599002220899365
+          },
+          "usage": {
+            "input_tokens": {
+              "total_known": 3468,
+              "records_with_usage": 3
+            },
+            "output_tokens": {
+              "total_known": 306,
+              "records_with_usage": 3
+            },
+            "thinking_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "cached_input_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "requests": {
+              "total_known": 3,
+              "records_with_usage": 3
+            }
+          },
+          "counts": {
+            "expected_statements": 3,
+            "extracted_statements": 3,
+            "matched_statements": 3,
+            "factual_expected": 3,
+            "factual_answered": 3,
+            "decisive_verdicts": 3,
+            "abstentions": 0,
+            "relevant_citations": 3,
+            "evidence_required_claims": 3,
+            "claims_with_relevant_citation": 3,
+            "statement_quotes_total": 3,
+            "statement_quotes_exact": 3,
+            "citations_total": 3,
+            "citation_relevance_denominator": 3,
+            "citations_valid": 3,
+            "purpose_total": 3,
+            "purpose_correct": 3,
+            "fraud_total": 3,
+            "fraud_correct": 3,
+            "nonfraud_cases": 3,
+            "false_fraud_accusations": 0
+          }
+        },
+        "explicit_persuasion": {
+          "attempted": 3,
+          "successful": 3,
+          "completion_rate": 1.0,
+          "status_counts": {
+            "ok": 3
+          },
+          "failure_codes": {},
+          "kind": {
+            "accuracy": 0.5,
+            "macro_f1": 0.6666666666666666,
+            "n": 4,
+            "per_label": {
+              "prediction": {
+                "precision": 0.6666666666666666,
+                "recall": 0.6666666666666666,
+                "f1": 0.6666666666666666,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "__extra__",
+                "actual": "prediction",
+                "count": 1
+              },
+              {
+                "expected": "prediction",
+                "actual": "__missing__",
+                "count": 1
+              },
+              {
+                "expected": "prediction",
+                "actual": "prediction",
+                "count": 2
+              }
+            ]
+          },
+          "verdict": {
+            "accuracy": null,
+            "macro_f1": null,
+            "n": 0,
+            "per_label": {},
+            "confusion": []
+          },
+          "extraction": {
+            "precision": 0.6666666666666666,
+            "recall": 0.6666666666666666
+          },
+          "factual_coverage": null,
+          "decisive_coverage": null,
+          "abstention_rate": null,
+          "false_accusation_rate": 0.0,
+          "extra_harmful_claims": 0,
+          "false_fraud_accusation_rate": 0.0,
+          "purpose_accuracy": 1.0,
+          "fraud_accuracy": 1.0,
+          "techniques": {
+            "per_type": {
+              "authority_appeal": {
+                "tn": 3,
+                "f1": null
+              },
+              "conspiracy_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "emotional_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "fear_appeal": {
+                "tp": 3,
+                "f1": 1.0
+              },
+              "unsupported_certainty": {
+                "tn": 3,
+                "f1": null
+              },
+              "urgency": {
+                "tp": 3,
+                "f1": 1.0
+              },
+              "us_vs_them": {
+                "tn": 3,
+                "f1": null
+              }
+            },
+            "macro_f1": 1.0
+          },
+          "ocr": {
+            "character_error_rate": null,
+            "word_error_rate": null,
+            "exact_normalized_transcription_rate": null,
+            "cases": 0
+          },
+          "statement_quote_compliance": 0.6666666666666666,
+          "technique_quote_compliance": 0.8333333333333334,
+          "citation_id_validity": null,
+          "citation_relevance": null,
+          "citation_coverage": null,
+          "latency_seconds": {
+            "p50": 1.7358030420000432,
+            "p95": 2.084900066699902,
+            "mean": 1.7585616249998566,
+            "min": 1.4161932079996404,
+            "max": 2.123688624999886,
+            "all_attempts_p50": 1.7358030420000432,
+            "all_attempts_p95": 2.084900066699902
+          },
+          "usage": {
+            "input_tokens": {
+              "total_known": 3108,
+              "records_with_usage": 3
+            },
+            "output_tokens": {
+              "total_known": 445,
+              "records_with_usage": 3
+            },
+            "thinking_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "cached_input_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "requests": {
+              "total_known": 3,
+              "records_with_usage": 3
+            }
+          },
+          "counts": {
+            "expected_statements": 3,
+            "extracted_statements": 3,
+            "matched_statements": 2,
+            "nonharmful_statements": 3,
+            "false_accusations": 0,
+            "relevant_citations": 0,
+            "statement_quotes_total": 3,
+            "statement_quotes_exact": 2,
+            "citations_total": 0,
+            "citation_relevance_denominator": 0,
+            "citations_valid": 0,
+            "technique_quotes_total": 6,
+            "technique_quotes_exact": 5,
+            "purpose_total": 3,
+            "purpose_correct": 3,
+            "fraud_total": 3,
+            "fraud_correct": 3,
+            "nonfraud_cases": 3,
+            "false_fraud_accusations": 0,
+            "extra_harmful_claims": 0
+          }
+        },
+        "fraud": {
+          "attempted": 3,
+          "successful": 3,
+          "completion_rate": 1.0,
+          "status_counts": {
+            "ok": 3
+          },
+          "failure_codes": {},
+          "kind": {
+            "accuracy": 0.6,
+            "macro_f1": 0.75,
+            "n": 5,
+            "per_label": {
+              "factual": {
+                "precision": 0.6,
+                "recall": 1.0,
+                "f1": 0.75,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "__extra__",
+                "actual": "factual",
+                "count": 2
+              },
+              {
+                "expected": "factual",
+                "actual": "factual",
+                "count": 3
+              }
+            ]
+          },
+          "verdict": {
+            "accuracy": 0.6,
+            "macro_f1": 0.75,
+            "n": 5,
+            "per_label": {
+              "contradicted": {
+                "precision": 0.6,
+                "recall": 1.0,
+                "f1": 0.75,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "__extra__",
+                "actual": "contradicted",
+                "count": 2
+              },
+              {
+                "expected": "contradicted",
+                "actual": "contradicted",
+                "count": 3
+              }
+            ]
+          },
+          "extraction": {
+            "precision": 0.6,
+            "recall": 1.0
+          },
+          "factual_coverage": 1.0,
+          "decisive_coverage": 1.0,
+          "abstention_rate": 0.0,
+          "false_accusation_rate": null,
+          "extra_harmful_claims": 2,
+          "false_fraud_accusation_rate": null,
+          "purpose_accuracy": 1.0,
+          "fraud_accuracy": 1.0,
+          "techniques": {
+            "per_type": {
+              "authority_appeal": {
+                "fp": 1,
+                "tn": 2,
+                "f1": 0.0
+              },
+              "conspiracy_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "emotional_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "fear_appeal": {
+                "tn": 3,
+                "f1": null
+              },
+              "unsupported_certainty": {
+                "tn": 2,
+                "fp": 1,
+                "f1": 0.0
+              },
+              "urgency": {
+                "tn": 2,
+                "fp": 1,
+                "f1": 0.0
+              },
+              "us_vs_them": {
+                "tn": 3,
+                "f1": null
+              }
+            },
+            "macro_f1": 0.0
+          },
+          "ocr": {
+            "character_error_rate": null,
+            "word_error_rate": null,
+            "exact_normalized_transcription_rate": null,
+            "cases": 0
+          },
+          "statement_quote_compliance": 1.0,
+          "technique_quote_compliance": 1.0,
+          "citation_id_validity": 1.0,
+          "citation_relevance": 0.6,
+          "citation_coverage": 1.0,
+          "latency_seconds": {
+            "p50": 1.6610460840001906,
+            "p95": 1.729796596199776,
+            "mean": 1.5913935836667104,
+            "min": 1.3756991250002102,
+            "max": 1.73743554199973,
+            "all_attempts_p50": 1.6610460840001906,
+            "all_attempts_p95": 1.729796596199776
+          },
+          "usage": {
+            "input_tokens": {
+              "total_known": 3492,
+              "records_with_usage": 3
+            },
+            "output_tokens": {
+              "total_known": 519,
+              "records_with_usage": 3
+            },
+            "thinking_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "cached_input_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "requests": {
+              "total_known": 3,
+              "records_with_usage": 3
+            }
+          },
+          "counts": {
+            "expected_statements": 3,
+            "extracted_statements": 5,
+            "matched_statements": 3,
+            "factual_expected": 3,
+            "factual_answered": 3,
+            "decisive_verdicts": 3,
+            "abstentions": 0,
+            "relevant_citations": 3,
+            "evidence_required_claims": 3,
+            "claims_with_relevant_citation": 3,
+            "extra_harmful_claims": 2,
+            "statement_quotes_total": 5,
+            "statement_quotes_exact": 5,
+            "citations_total": 5,
+            "citation_relevance_denominator": 5,
+            "citations_valid": 5,
+            "technique_quotes_total": 3,
+            "technique_quotes_exact": 3,
+            "purpose_total": 3,
+            "purpose_correct": 3,
+            "fraud_total": 3,
+            "fraud_correct": 3
+          }
+        },
+        "insufficient_evidence": {
+          "attempted": 3,
+          "successful": 3,
+          "completion_rate": 1.0,
+          "status_counts": {
+            "ok": 3
+          },
+          "failure_codes": {},
+          "kind": {
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "n": 3,
+            "per_label": {
+              "factual": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "factual",
+                "actual": "factual",
+                "count": 3
+              }
+            ]
+          },
+          "verdict": {
+            "accuracy": 0.0,
+            "macro_f1": 0.0,
+            "n": 3,
+            "per_label": {
+              "contradicted": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "support": 0
+              },
+              "insufficient": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "insufficient",
+                "actual": "contradicted",
+                "count": 3
+              }
+            ]
+          },
+          "extraction": {
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "factual_coverage": 1.0,
+          "decisive_coverage": 1.0,
+          "abstention_rate": 0.0,
+          "false_accusation_rate": 1.0,
+          "extra_harmful_claims": 0,
+          "false_fraud_accusation_rate": 0.0,
+          "purpose_accuracy": 1.0,
+          "fraud_accuracy": 1.0,
+          "techniques": {
+            "per_type": {
+              "authority_appeal": {
+                "tn": 3,
+                "f1": null
+              },
+              "conspiracy_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "emotional_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "fear_appeal": {
+                "tn": 3,
+                "f1": null
+              },
+              "unsupported_certainty": {
+                "tn": 2,
+                "fp": 1,
+                "f1": 0.0
+              },
+              "urgency": {
+                "tn": 3,
+                "f1": null
+              },
+              "us_vs_them": {
+                "tn": 3,
+                "f1": null
+              }
+            },
+            "macro_f1": 0.0
+          },
+          "ocr": {
+            "character_error_rate": null,
+            "word_error_rate": null,
+            "exact_normalized_transcription_rate": null,
+            "cases": 0
+          },
+          "statement_quote_compliance": 1.0,
+          "technique_quote_compliance": 1.0,
+          "citation_id_validity": 1.0,
+          "citation_relevance": 0.0,
+          "citation_coverage": null,
+          "latency_seconds": {
+            "p50": 1.4655169590005244,
+            "p95": 1.4786115458994573,
+            "mean": 1.3548012363332116,
+            "min": 1.1188202499997715,
+            "max": 1.4800664999993387,
+            "all_attempts_p50": 1.4655169590005244,
+            "all_attempts_p95": 1.4786115458994573
+          },
+          "usage": {
+            "input_tokens": {
+              "total_known": 3264,
+              "records_with_usage": 3
+            },
+            "output_tokens": {
+              "total_known": 291,
+              "records_with_usage": 3
+            },
+            "thinking_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "cached_input_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "requests": {
+              "total_known": 3,
+              "records_with_usage": 3
+            }
+          },
+          "counts": {
+            "expected_statements": 3,
+            "extracted_statements": 3,
+            "matched_statements": 3,
+            "factual_expected": 3,
+            "factual_answered": 3,
+            "decisive_verdicts": 3,
+            "abstentions": 0,
+            "nonharmful_statements": 3,
+            "false_accusations": 3,
+            "relevant_citations": 0,
+            "statement_quotes_total": 3,
+            "statement_quotes_exact": 3,
+            "citations_total": 3,
+            "citation_relevance_denominator": 3,
+            "citations_valid": 3,
+            "purpose_total": 3,
+            "purpose_correct": 3,
+            "fraud_total": 3,
+            "fraud_correct": 3,
+            "nonfraud_cases": 3,
+            "false_fraud_accusations": 0,
+            "technique_quotes_total": 1,
+            "technique_quotes_exact": 1
+          }
+        },
+        "neutral_institutional_attribution": {
+          "attempted": 3,
+          "successful": 3,
+          "completion_rate": 1.0,
+          "status_counts": {
+            "ok": 3
+          },
+          "failure_codes": {},
+          "kind": {
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "n": 3,
+            "per_label": {
+              "factual": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "factual",
+                "actual": "factual",
+                "count": 3
+              }
+            ]
+          },
+          "verdict": {
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "n": 3,
+            "per_label": {
+              "supported": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "supported",
+                "actual": "supported",
+                "count": 3
+              }
+            ]
+          },
+          "extraction": {
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "factual_coverage": 1.0,
+          "decisive_coverage": 1.0,
+          "abstention_rate": 0.0,
+          "false_accusation_rate": 0.0,
+          "extra_harmful_claims": 0,
+          "false_fraud_accusation_rate": 0.0,
+          "purpose_accuracy": 1.0,
+          "fraud_accuracy": 1.0,
+          "techniques": {
+            "per_type": {
+              "authority_appeal": {
+                "tn": 3,
+                "f1": null
+              },
+              "conspiracy_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "emotional_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "fear_appeal": {
+                "tn": 3,
+                "f1": null
+              },
+              "unsupported_certainty": {
+                "tn": 3,
+                "f1": null
+              },
+              "urgency": {
+                "tn": 3,
+                "f1": null
+              },
+              "us_vs_them": {
+                "tn": 3,
+                "f1": null
+              }
+            },
+            "macro_f1": null
+          },
+          "ocr": {
+            "character_error_rate": null,
+            "word_error_rate": null,
+            "exact_normalized_transcription_rate": null,
+            "cases": 0
+          },
+          "statement_quote_compliance": 1.0,
+          "technique_quote_compliance": null,
+          "citation_id_validity": 1.0,
+          "citation_relevance": 1.0,
+          "citation_coverage": 1.0,
+          "latency_seconds": {
+            "p50": 1.4328476250002495,
+            "p95": 1.4724820500003262,
+            "mean": 1.4272194306668098,
+            "min": 1.3719247919998452,
+            "max": 1.4768858750003346,
+            "all_attempts_p50": 1.4328476250002495,
+            "all_attempts_p95": 1.4724820500003262
+          },
+          "usage": {
+            "input_tokens": {
+              "total_known": 3225,
+              "records_with_usage": 3
+            },
+            "output_tokens": {
+              "total_known": 216,
+              "records_with_usage": 3
+            },
+            "thinking_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "cached_input_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "requests": {
+              "total_known": 3,
+              "records_with_usage": 3
+            }
+          },
+          "counts": {
+            "expected_statements": 3,
+            "extracted_statements": 3,
+            "matched_statements": 3,
+            "factual_expected": 3,
+            "factual_answered": 3,
+            "decisive_verdicts": 3,
+            "abstentions": 0,
+            "nonharmful_statements": 3,
+            "false_accusations": 0,
+            "relevant_citations": 3,
+            "evidence_required_claims": 3,
+            "claims_with_relevant_citation": 3,
+            "statement_quotes_total": 3,
+            "statement_quotes_exact": 3,
+            "citations_total": 3,
+            "citation_relevance_denominator": 3,
+            "citations_valid": 3,
+            "purpose_total": 3,
+            "purpose_correct": 3,
+            "fraud_total": 3,
+            "fraud_correct": 3,
+            "nonfraud_cases": 3,
+            "false_fraud_accusations": 0
+          }
+        },
+        "supported_fact": {
+          "attempted": 3,
+          "successful": 3,
+          "completion_rate": 1.0,
+          "status_counts": {
+            "ok": 3
+          },
+          "failure_codes": {},
+          "kind": {
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "n": 3,
+            "per_label": {
+              "factual": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "factual",
+                "actual": "factual",
+                "count": 3
+              }
+            ]
+          },
+          "verdict": {
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "n": 3,
+            "per_label": {
+              "supported": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "supported",
+                "actual": "supported",
+                "count": 3
+              }
+            ]
+          },
+          "extraction": {
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "factual_coverage": 1.0,
+          "decisive_coverage": 1.0,
+          "abstention_rate": 0.0,
+          "false_accusation_rate": 0.0,
+          "extra_harmful_claims": 0,
+          "false_fraud_accusation_rate": 0.0,
+          "purpose_accuracy": 1.0,
+          "fraud_accuracy": 1.0,
+          "techniques": {
+            "per_type": {
+              "authority_appeal": {
+                "tn": 3,
+                "f1": null
+              },
+              "conspiracy_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "emotional_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "fear_appeal": {
+                "tn": 3,
+                "f1": null
+              },
+              "unsupported_certainty": {
+                "tn": 3,
+                "f1": null
+              },
+              "urgency": {
+                "tn": 3,
+                "f1": null
+              },
+              "us_vs_them": {
+                "tn": 3,
+                "f1": null
+              }
+            },
+            "macro_f1": null
+          },
+          "ocr": {
+            "character_error_rate": null,
+            "word_error_rate": null,
+            "exact_normalized_transcription_rate": null,
+            "cases": 0
+          },
+          "statement_quote_compliance": 1.0,
+          "technique_quote_compliance": null,
+          "citation_id_validity": 1.0,
+          "citation_relevance": 1.0,
+          "citation_coverage": 1.0,
+          "latency_seconds": {
+            "p50": 1.43793233300039,
+            "p95": 1.491514283000015,
+            "mean": 1.3931553053331907,
+            "min": 1.2440657499992085,
+            "max": 1.4974678329999733,
+            "all_attempts_p50": 1.43793233300039,
+            "all_attempts_p95": 1.491514283000015
+          },
+          "usage": {
+            "input_tokens": {
+              "total_known": 3393,
+              "records_with_usage": 3
+            },
+            "output_tokens": {
+              "total_known": 301,
+              "records_with_usage": 3
+            },
+            "thinking_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "cached_input_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "requests": {
+              "total_known": 3,
+              "records_with_usage": 3
+            }
+          },
+          "counts": {
+            "expected_statements": 3,
+            "extracted_statements": 3,
+            "matched_statements": 3,
+            "factual_expected": 3,
+            "factual_answered": 3,
+            "decisive_verdicts": 3,
+            "abstentions": 0,
+            "nonharmful_statements": 3,
+            "false_accusations": 0,
+            "relevant_citations": 3,
+            "evidence_required_claims": 3,
+            "claims_with_relevant_citation": 3,
+            "statement_quotes_total": 3,
+            "statement_quotes_exact": 3,
+            "citations_total": 3,
+            "citation_relevance_denominator": 3,
+            "citations_valid": 3,
+            "purpose_total": 3,
+            "purpose_correct": 3,
+            "fraud_total": 3,
+            "fraud_correct": 3,
+            "nonfraud_cases": 3,
+            "false_fraud_accusations": 0
+          }
+        }
+      },
+      "by_modality": {
+        "text": {
+          "attempted": 18,
+          "successful": 18,
+          "completion_rate": 1.0,
+          "status_counts": {
+            "ok": 18
+          },
+          "failure_codes": {},
+          "kind": {
+            "accuracy": 0.8095238095238095,
+            "macro_f1": 0.8020833333333333,
+            "n": 21,
+            "per_label": {
+              "factual": {
+                "precision": 0.8823529411764706,
+                "recall": 1.0,
+                "f1": 0.9375,
+                "support": 15
+              },
+              "prediction": {
+                "precision": 0.6666666666666666,
+                "recall": 0.6666666666666666,
+                "f1": 0.6666666666666666,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "__extra__",
+                "actual": "factual",
+                "count": 2
+              },
+              {
+                "expected": "__extra__",
+                "actual": "prediction",
+                "count": 1
+              },
+              {
+                "expected": "factual",
+                "actual": "factual",
+                "count": 15
+              },
+              {
+                "expected": "prediction",
+                "actual": "__missing__",
+                "count": 1
+              },
+              {
+                "expected": "prediction",
+                "actual": "prediction",
+                "count": 2
+              }
+            ]
+          },
+          "verdict": {
+            "accuracy": 0.7058823529411765,
+            "macro_f1": 0.5686274509803921,
+            "n": 17,
+            "per_label": {
+              "supported": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 6
+              },
+              "contradicted": {
+                "precision": 0.5454545454545454,
+                "recall": 1.0,
+                "f1": 0.7058823529411765,
+                "support": 6
+              },
+              "insufficient": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "__extra__",
+                "actual": "contradicted",
+                "count": 2
+              },
+              {
+                "expected": "contradicted",
+                "actual": "contradicted",
+                "count": 6
+              },
+              {
+                "expected": "insufficient",
+                "actual": "contradicted",
+                "count": 3
+              },
+              {
+                "expected": "supported",
+                "actual": "supported",
+                "count": 6
+              }
+            ]
+          },
+          "extraction": {
+            "precision": 0.85,
+            "recall": 0.9444444444444444
+          },
+          "factual_coverage": 1.0,
+          "decisive_coverage": 1.0,
+          "abstention_rate": 0.0,
+          "false_accusation_rate": 0.25,
+          "extra_harmful_claims": 2,
+          "false_fraud_accusation_rate": 0.0,
+          "purpose_accuracy": 1.0,
+          "fraud_accuracy": 1.0,
+          "techniques": {
+            "per_type": {
+              "authority_appeal": {
+                "tn": 17,
+                "fp": 1,
+                "f1": 0.0
+              },
+              "conspiracy_framing": {
+                "tn": 18,
+                "f1": null
+              },
+              "emotional_framing": {
+                "tn": 18,
+                "f1": null
+              },
+              "fear_appeal": {
+                "tn": 15,
+                "tp": 3,
+                "f1": 1.0
+              },
+              "unsupported_certainty": {
+                "tn": 16,
+                "fp": 2,
+                "f1": 0.0
+              },
+              "urgency": {
+                "tn": 14,
+                "tp": 3,
+                "fp": 1,
+                "f1": 0.8571428571428571
+              },
+              "us_vs_them": {
+                "tn": 18,
+                "f1": null
+              }
+            },
+            "macro_f1": 0.4642857142857143
+          },
+          "ocr": {
+            "character_error_rate": null,
+            "word_error_rate": null,
+            "exact_normalized_transcription_rate": null,
+            "cases": 0
+          },
+          "statement_quote_compliance": 0.95,
+          "technique_quote_compliance": 0.9,
+          "citation_id_validity": 1.0,
+          "citation_relevance": 0.7058823529411765,
+          "citation_coverage": 1.0,
+          "latency_seconds": {
+            "p50": 1.4784761874998367,
+            "p95": 1.795373504449753,
+            "mean": 1.513877888999913,
+            "min": 1.1188202499997715,
+            "max": 2.123688624999886,
+            "all_attempts_p50": 1.4784761874998367,
+            "all_attempts_p95": 1.795373504449753
+          },
+          "usage": {
+            "input_tokens": {
+              "total_known": 19950,
+              "records_with_usage": 18
+            },
+            "output_tokens": {
+              "total_known": 2078,
+              "records_with_usage": 18
+            },
+            "thinking_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "cached_input_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "requests": {
+              "total_known": 18,
+              "records_with_usage": 18
+            }
+          },
+          "counts": {
+            "expected_statements": 18,
+            "extracted_statements": 20,
+            "matched_statements": 17,
+            "factual_expected": 15,
+            "factual_answered": 15,
+            "decisive_verdicts": 15,
+            "abstentions": 0,
+            "nonharmful_statements": 12,
+            "false_accusations": 3,
+            "relevant_citations": 12,
+            "evidence_required_claims": 12,
+            "claims_with_relevant_citation": 12,
+            "statement_quotes_total": 20,
+            "statement_quotes_exact": 19,
+            "citations_total": 17,
+            "citation_relevance_denominator": 17,
+            "citations_valid": 17,
+            "purpose_total": 18,
+            "purpose_correct": 18,
+            "fraud_total": 18,
+            "fraud_correct": 18,
+            "nonfraud_cases": 15,
+            "false_fraud_accusations": 0,
+            "extra_harmful_claims": 2,
+            "technique_quotes_total": 10,
+            "technique_quotes_exact": 9
+          }
+        }
+      }
+    },
+    "flash-low/fixed": {
+      "attempted": 18,
+      "successful": 18,
+      "completion_rate": 1.0,
+      "status_counts": {
+        "ok": 18
+      },
+      "failure_codes": {},
+      "kind": {
+        "accuracy": 0.7727272727272727,
+        "macro_f1": 0.5448028673835126,
+        "n": 22,
+        "per_label": {
+          "factual": {
+            "precision": 0.9375,
+            "recall": 1.0,
+            "f1": 0.967741935483871,
+            "support": 15
+          },
+          "prediction": {
+            "precision": 0.6666666666666666,
+            "recall": 0.6666666666666666,
+            "f1": 0.6666666666666666,
+            "support": 3
+          },
+          "unclear": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 0
+          }
+        },
+        "confusion": [
+          {
+            "expected": "__extra__",
+            "actual": "factual",
+            "count": 1
+          },
+          {
+            "expected": "__extra__",
+            "actual": "prediction",
+            "count": 1
+          },
+          {
+            "expected": "__extra__",
+            "actual": "unclear",
+            "count": 2
+          },
+          {
+            "expected": "factual",
+            "actual": "factual",
+            "count": 15
+          },
+          {
+            "expected": "prediction",
+            "actual": "__missing__",
+            "count": 1
+          },
+          {
+            "expected": "prediction",
+            "actual": "prediction",
+            "count": 2
+          }
+        ]
+      },
+      "verdict": {
+        "accuracy": 0.75,
+        "macro_f1": 0.6,
+        "n": 16,
+        "per_label": {
+          "supported": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "support": 6
+          },
+          "contradicted": {
+            "precision": 0.6666666666666666,
+            "recall": 1.0,
+            "f1": 0.8,
+            "support": 6
+          },
+          "insufficient": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 3
+          }
+        },
+        "confusion": [
+          {
+            "expected": "__extra__",
+            "actual": "insufficient",
+            "count": 1
+          },
+          {
+            "expected": "contradicted",
+            "actual": "contradicted",
+            "count": 6
+          },
+          {
+            "expected": "insufficient",
+            "actual": "contradicted",
+            "count": 3
+          },
+          {
+            "expected": "supported",
+            "actual": "supported",
+            "count": 6
+          }
+        ]
+      },
+      "extraction": {
+        "precision": 0.8095238095238095,
+        "recall": 0.9444444444444444
+      },
+      "factual_coverage": 1.0,
+      "decisive_coverage": 1.0,
+      "abstention_rate": 0.0,
+      "false_accusation_rate": 0.25,
+      "extra_harmful_claims": 0,
+      "false_fraud_accusation_rate": 0.0,
+      "purpose_accuracy": 1.0,
+      "fraud_accuracy": 1.0,
+      "techniques": {
+        "per_type": {
+          "authority_appeal": {
+            "tn": 18,
+            "f1": null
+          },
+          "conspiracy_framing": {
+            "tn": 18,
+            "f1": null
+          },
+          "emotional_framing": {
+            "tn": 18,
+            "f1": null
+          },
+          "fear_appeal": {
+            "tn": 15,
+            "tp": 3,
+            "f1": 1.0
+          },
+          "unsupported_certainty": {
+            "tn": 18,
+            "f1": null
+          },
+          "urgency": {
+            "tn": 15,
+            "tp": 3,
+            "f1": 1.0
+          },
+          "us_vs_them": {
+            "tn": 18,
+            "f1": null
+          }
+        },
+        "macro_f1": 1.0
+      },
+      "ocr": {
+        "character_error_rate": null,
+        "word_error_rate": null,
+        "exact_normalized_transcription_rate": null,
+        "cases": 0
+      },
+      "statement_quote_compliance": 0.9047619047619048,
+      "technique_quote_compliance": 0.6666666666666666,
+      "citation_id_validity": 1.0,
+      "citation_relevance": 0.8,
+      "citation_coverage": 1.0,
+      "latency_seconds": {
+        "p50": 1.7394555625000976,
+        "p95": 2.26958252140007,
+        "mean": 1.8232448032221227,
+        "min": 1.563240333000067,
+        "max": 2.7131893750001836,
+        "all_attempts_p50": 1.7394555625000976,
+        "all_attempts_p95": 2.26958252140007
+      },
+      "usage": {
+        "input_tokens": {
+          "total_known": 19950,
+          "records_with_usage": 18
+        },
+        "output_tokens": {
+          "total_known": 1541,
+          "records_with_usage": 18
+        },
+        "thinking_tokens": {
+          "total_known": 235,
+          "records_with_usage": 1
+        },
+        "cached_input_tokens": {
+          "total_known": null,
+          "records_with_usage": 0
+        },
+        "requests": {
+          "total_known": 18,
+          "records_with_usage": 18
+        }
+      },
+      "counts": {
+        "expected_statements": 18,
+        "extracted_statements": 21,
+        "matched_statements": 17,
+        "factual_expected": 15,
+        "factual_answered": 15,
+        "decisive_verdicts": 15,
+        "abstentions": 0,
+        "nonharmful_statements": 12,
+        "false_accusations": 3,
+        "relevant_citations": 12,
+        "evidence_required_claims": 12,
+        "claims_with_relevant_citation": 12,
+        "statement_quotes_total": 21,
+        "statement_quotes_exact": 19,
+        "citations_total": 15,
+        "citation_relevance_denominator": 15,
+        "citations_valid": 15,
+        "purpose_total": 18,
+        "purpose_correct": 18,
+        "fraud_total": 18,
+        "fraud_correct": 18,
+        "nonfraud_cases": 15,
+        "false_fraud_accusations": 0,
+        "extra_harmful_claims": 0,
+        "technique_quotes_total": 6,
+        "technique_quotes_exact": 4
+      },
+      "by_language": {
+        "en": {
+          "attempted": 6,
+          "successful": 6,
+          "completion_rate": 1.0,
+          "status_counts": {
+            "ok": 6
+          },
+          "failure_codes": {},
+          "kind": {
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "n": 6,
+            "per_label": {
+              "factual": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 6
+              }
+            },
+            "confusion": [
+              {
+                "expected": "factual",
+                "actual": "factual",
+                "count": 6
+              }
+            ]
+          },
+          "verdict": {
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "n": 6,
+            "per_label": {
+              "supported": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 6
+              }
+            },
+            "confusion": [
+              {
+                "expected": "supported",
+                "actual": "supported",
+                "count": 6
+              }
+            ]
+          },
+          "extraction": {
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "factual_coverage": 1.0,
+          "decisive_coverage": 1.0,
+          "abstention_rate": 0.0,
+          "false_accusation_rate": 0.0,
+          "extra_harmful_claims": 0,
+          "false_fraud_accusation_rate": 0.0,
+          "purpose_accuracy": 1.0,
+          "fraud_accuracy": 1.0,
+          "techniques": {
+            "per_type": {
+              "authority_appeal": {
+                "tn": 6,
+                "f1": null
+              },
+              "conspiracy_framing": {
+                "tn": 6,
+                "f1": null
+              },
+              "emotional_framing": {
+                "tn": 6,
+                "f1": null
+              },
+              "fear_appeal": {
+                "tn": 6,
+                "f1": null
+              },
+              "unsupported_certainty": {
+                "tn": 6,
+                "f1": null
+              },
+              "urgency": {
+                "tn": 6,
+                "f1": null
+              },
+              "us_vs_them": {
+                "tn": 6,
+                "f1": null
+              }
+            },
+            "macro_f1": null
+          },
+          "ocr": {
+            "character_error_rate": null,
+            "word_error_rate": null,
+            "exact_normalized_transcription_rate": null,
+            "cases": 0
+          },
+          "statement_quote_compliance": 1.0,
+          "technique_quote_compliance": null,
+          "citation_id_validity": 1.0,
+          "citation_relevance": 1.0,
+          "citation_coverage": 1.0,
+          "latency_seconds": {
+            "p50": 1.753602916499858,
+            "p95": 2.5036903437503497,
+            "mean": 1.8956650276666853,
+            "min": 1.6281490829996983,
+            "max": 2.7131893750001836,
+            "all_attempts_p50": 1.753602916499858,
+            "all_attempts_p95": 2.5036903437503497
+          },
+          "usage": {
+            "input_tokens": {
+              "total_known": 6618,
+              "records_with_usage": 6
+            },
+            "output_tokens": {
+              "total_known": 422,
+              "records_with_usage": 6
+            },
+            "thinking_tokens": {
+              "total_known": 235,
+              "records_with_usage": 1
+            },
+            "cached_input_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "requests": {
+              "total_known": 6,
+              "records_with_usage": 6
+            }
+          },
+          "counts": {
+            "expected_statements": 6,
+            "extracted_statements": 6,
+            "matched_statements": 6,
+            "factual_expected": 6,
+            "factual_answered": 6,
+            "decisive_verdicts": 6,
+            "abstentions": 0,
+            "nonharmful_statements": 6,
+            "false_accusations": 0,
+            "relevant_citations": 6,
+            "evidence_required_claims": 6,
+            "claims_with_relevant_citation": 6,
+            "statement_quotes_total": 6,
+            "statement_quotes_exact": 6,
+            "citations_total": 6,
+            "citation_relevance_denominator": 6,
+            "citations_valid": 6,
+            "purpose_total": 6,
+            "purpose_correct": 6,
+            "fraud_total": 6,
+            "fraud_correct": 6,
+            "nonfraud_cases": 6,
+            "false_fraud_accusations": 0
+          }
+        },
+        "ro": {
+          "attempted": 6,
+          "successful": 6,
+          "completion_rate": 1.0,
+          "status_counts": {
+            "ok": 6
+          },
+          "failure_codes": {},
+          "kind": {
+            "accuracy": 0.7142857142857143,
+            "macro_f1": 0.8333333333333333,
+            "n": 7,
+            "per_label": {
+              "factual": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 3
+              },
+              "prediction": {
+                "precision": 0.6666666666666666,
+                "recall": 0.6666666666666666,
+                "f1": 0.6666666666666666,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "__extra__",
+                "actual": "prediction",
+                "count": 1
+              },
+              {
+                "expected": "factual",
+                "actual": "factual",
+                "count": 3
+              },
+              {
+                "expected": "prediction",
+                "actual": "__missing__",
+                "count": 1
+              },
+              {
+                "expected": "prediction",
+                "actual": "prediction",
+                "count": 2
+              }
+            ]
+          },
+          "verdict": {
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "n": 3,
+            "per_label": {
+              "contradicted": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "contradicted",
+                "actual": "contradicted",
+                "count": 3
+              }
+            ]
+          },
+          "extraction": {
+            "precision": 0.8333333333333334,
+            "recall": 0.8333333333333334
+          },
+          "factual_coverage": 1.0,
+          "decisive_coverage": 1.0,
+          "abstention_rate": 0.0,
+          "false_accusation_rate": 0.0,
+          "extra_harmful_claims": 0,
+          "false_fraud_accusation_rate": 0.0,
+          "purpose_accuracy": 1.0,
+          "fraud_accuracy": 1.0,
+          "techniques": {
+            "per_type": {
+              "authority_appeal": {
+                "tn": 6,
+                "f1": null
+              },
+              "conspiracy_framing": {
+                "tn": 6,
+                "f1": null
+              },
+              "emotional_framing": {
+                "tn": 6,
+                "f1": null
+              },
+              "fear_appeal": {
+                "tp": 3,
+                "tn": 3,
+                "f1": 1.0
+              },
+              "unsupported_certainty": {
+                "tn": 6,
+                "f1": null
+              },
+              "urgency": {
+                "tp": 3,
+                "tn": 3,
+                "f1": 1.0
+              },
+              "us_vs_them": {
+                "tn": 6,
+                "f1": null
+              }
+            },
+            "macro_f1": 1.0
+          },
+          "ocr": {
+            "character_error_rate": null,
+            "word_error_rate": null,
+            "exact_normalized_transcription_rate": null,
+            "cases": 0
+          },
+          "statement_quote_compliance": 0.6666666666666666,
+          "technique_quote_compliance": 0.6666666666666666,
+          "citation_id_validity": 1.0,
+          "citation_relevance": 1.0,
+          "citation_coverage": 1.0,
+          "latency_seconds": {
+            "p50": 1.6359475624994957,
+            "p95": 2.1220735110000533,
+            "mean": 1.7612348056665421,
+            "min": 1.563240333000067,
+            "max": 2.1912989590000507,
+            "all_attempts_p50": 1.6359475624994957,
+            "all_attempts_p95": 2.1220735110000533
+          },
+          "usage": {
+            "input_tokens": {
+              "total_known": 6576,
+              "records_with_usage": 6
+            },
+            "output_tokens": {
+              "total_known": 630,
+              "records_with_usage": 6
+            },
+            "thinking_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "cached_input_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "requests": {
+              "total_known": 6,
+              "records_with_usage": 6
+            }
+          },
+          "counts": {
+            "expected_statements": 6,
+            "extracted_statements": 6,
+            "matched_statements": 5,
+            "nonharmful_statements": 3,
+            "false_accusations": 0,
+            "extra_harmful_claims": 0,
+            "statement_quotes_total": 6,
+            "statement_quotes_exact": 4,
+            "citations_total": 3,
+            "citation_relevance_denominator": 3,
+            "citations_valid": 3,
+            "technique_quotes_total": 6,
+            "technique_quotes_exact": 4,
+            "purpose_total": 6,
+            "purpose_correct": 6,
+            "fraud_total": 6,
+            "fraud_correct": 6,
+            "nonfraud_cases": 6,
+            "false_fraud_accusations": 0,
+            "factual_expected": 3,
+            "factual_answered": 3,
+            "decisive_verdicts": 3,
+            "abstentions": 0,
+            "relevant_citations": 3,
+            "evidence_required_claims": 3,
+            "claims_with_relevant_citation": 3
+          }
+        },
+        "ru": {
+          "attempted": 6,
+          "successful": 6,
+          "completion_rate": 1.0,
+          "status_counts": {
+            "ok": 6
+          },
+          "failure_codes": {},
+          "kind": {
+            "accuracy": 0.6666666666666666,
+            "macro_f1": 0.46153846153846156,
+            "n": 9,
+            "per_label": {
+              "factual": {
+                "precision": 0.8571428571428571,
+                "recall": 1.0,
+                "f1": 0.9230769230769231,
+                "support": 6
+              },
+              "unclear": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "support": 0
+              }
+            },
+            "confusion": [
+              {
+                "expected": "__extra__",
+                "actual": "factual",
+                "count": 1
+              },
+              {
+                "expected": "__extra__",
+                "actual": "unclear",
+                "count": 2
+              },
+              {
+                "expected": "factual",
+                "actual": "factual",
+                "count": 6
+              }
+            ]
+          },
+          "verdict": {
+            "accuracy": 0.42857142857142855,
+            "macro_f1": 0.3333333333333333,
+            "n": 7,
+            "per_label": {
+              "contradicted": {
+                "precision": 0.5,
+                "recall": 1.0,
+                "f1": 0.6666666666666666,
+                "support": 3
+              },
+              "insufficient": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "__extra__",
+                "actual": "insufficient",
+                "count": 1
+              },
+              {
+                "expected": "contradicted",
+                "actual": "contradicted",
+                "count": 3
+              },
+              {
+                "expected": "insufficient",
+                "actual": "contradicted",
+                "count": 3
+              }
+            ]
+          },
+          "extraction": {
+            "precision": 0.6666666666666666,
+            "recall": 1.0
+          },
+          "factual_coverage": 1.0,
+          "decisive_coverage": 1.0,
+          "abstention_rate": 0.0,
+          "false_accusation_rate": 1.0,
+          "extra_harmful_claims": 0,
+          "false_fraud_accusation_rate": 0.0,
+          "purpose_accuracy": 1.0,
+          "fraud_accuracy": 1.0,
+          "techniques": {
+            "per_type": {
+              "authority_appeal": {
+                "tn": 6,
+                "f1": null
+              },
+              "conspiracy_framing": {
+                "tn": 6,
+                "f1": null
+              },
+              "emotional_framing": {
+                "tn": 6,
+                "f1": null
+              },
+              "fear_appeal": {
+                "tn": 6,
+                "f1": null
+              },
+              "unsupported_certainty": {
+                "tn": 6,
+                "f1": null
+              },
+              "urgency": {
+                "tn": 6,
+                "f1": null
+              },
+              "us_vs_them": {
+                "tn": 6,
+                "f1": null
+              }
+            },
+            "macro_f1": null
+          },
+          "ocr": {
+            "character_error_rate": null,
+            "word_error_rate": null,
+            "exact_normalized_transcription_rate": null,
+            "cases": 0
+          },
+          "statement_quote_compliance": 1.0,
+          "technique_quote_compliance": null,
+          "citation_id_validity": 1.0,
+          "citation_relevance": 0.5,
+          "citation_coverage": 1.0,
+          "latency_seconds": {
+            "p50": 1.8359051664997423,
+            "p95": 2.0220932502502365,
+            "mean": 1.8128345763331406,
+            "min": 1.5865022499992847,
+            "max": 2.0527604170001723,
+            "all_attempts_p50": 1.8359051664997423,
+            "all_attempts_p95": 2.0220932502502365
+          },
+          "usage": {
+            "input_tokens": {
+              "total_known": 6756,
+              "records_with_usage": 6
+            },
+            "output_tokens": {
+              "total_known": 489,
+              "records_with_usage": 6
+            },
+            "thinking_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "cached_input_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "requests": {
+              "total_known": 6,
+              "records_with_usage": 6
+            }
+          },
+          "counts": {
+            "expected_statements": 6,
+            "extracted_statements": 9,
+            "matched_statements": 6,
+            "factual_expected": 6,
+            "factual_answered": 6,
+            "decisive_verdicts": 6,
+            "abstentions": 0,
+            "relevant_citations": 3,
+            "evidence_required_claims": 3,
+            "claims_with_relevant_citation": 3,
+            "extra_harmful_claims": 0,
+            "statement_quotes_total": 9,
+            "statement_quotes_exact": 9,
+            "citations_total": 6,
+            "citation_relevance_denominator": 6,
+            "citations_valid": 6,
+            "purpose_total": 6,
+            "purpose_correct": 6,
+            "fraud_total": 6,
+            "fraud_correct": 6,
+            "nonharmful_statements": 3,
+            "false_accusations": 3,
+            "nonfraud_cases": 3,
+            "false_fraud_accusations": 0
+          }
+        }
+      },
+      "by_category": {
+        "contradicted_fact": {
+          "attempted": 3,
+          "successful": 3,
+          "completion_rate": 1.0,
+          "status_counts": {
+            "ok": 3
+          },
+          "failure_codes": {},
+          "kind": {
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "n": 3,
+            "per_label": {
+              "factual": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "factual",
+                "actual": "factual",
+                "count": 3
+              }
+            ]
+          },
+          "verdict": {
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "n": 3,
+            "per_label": {
+              "contradicted": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "contradicted",
+                "actual": "contradicted",
+                "count": 3
+              }
+            ]
+          },
+          "extraction": {
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "factual_coverage": 1.0,
+          "decisive_coverage": 1.0,
+          "abstention_rate": 0.0,
+          "false_accusation_rate": null,
+          "extra_harmful_claims": 0,
+          "false_fraud_accusation_rate": 0.0,
+          "purpose_accuracy": 1.0,
+          "fraud_accuracy": 1.0,
+          "techniques": {
+            "per_type": {
+              "authority_appeal": {
+                "tn": 3,
+                "f1": null
+              },
+              "conspiracy_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "emotional_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "fear_appeal": {
+                "tn": 3,
+                "f1": null
+              },
+              "unsupported_certainty": {
+                "tn": 3,
+                "f1": null
+              },
+              "urgency": {
+                "tn": 3,
+                "f1": null
+              },
+              "us_vs_them": {
+                "tn": 3,
+                "f1": null
+              }
+            },
+            "macro_f1": null
+          },
+          "ocr": {
+            "character_error_rate": null,
+            "word_error_rate": null,
+            "exact_normalized_transcription_rate": null,
+            "cases": 0
+          },
+          "statement_quote_compliance": 1.0,
+          "technique_quote_compliance": null,
+          "citation_id_validity": 1.0,
+          "citation_relevance": 1.0,
+          "citation_coverage": 1.0,
+          "latency_seconds": {
+            "p50": 1.6265772500000821,
+            "p95": 1.6413562624995393,
+            "mean": 1.6109386526665428,
+            "min": 1.563240333000067,
+            "max": 1.642998374999479,
+            "all_attempts_p50": 1.6265772500000821,
+            "all_attempts_p95": 1.6413562624995393
+          },
+          "usage": {
+            "input_tokens": {
+              "total_known": 3468,
+              "records_with_usage": 3
+            },
+            "output_tokens": {
+              "total_known": 200,
+              "records_with_usage": 3
+            },
+            "thinking_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "cached_input_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "requests": {
+              "total_known": 3,
+              "records_with_usage": 3
+            }
+          },
+          "counts": {
+            "expected_statements": 3,
+            "extracted_statements": 3,
+            "matched_statements": 3,
+            "factual_expected": 3,
+            "factual_answered": 3,
+            "decisive_verdicts": 3,
+            "abstentions": 0,
+            "relevant_citations": 3,
+            "evidence_required_claims": 3,
+            "claims_with_relevant_citation": 3,
+            "statement_quotes_total": 3,
+            "statement_quotes_exact": 3,
+            "citations_total": 3,
+            "citation_relevance_denominator": 3,
+            "citations_valid": 3,
+            "purpose_total": 3,
+            "purpose_correct": 3,
+            "fraud_total": 3,
+            "fraud_correct": 3,
+            "nonfraud_cases": 3,
+            "false_fraud_accusations": 0
+          }
+        },
+        "explicit_persuasion": {
+          "attempted": 3,
+          "successful": 3,
+          "completion_rate": 1.0,
+          "status_counts": {
+            "ok": 3
+          },
+          "failure_codes": {},
+          "kind": {
+            "accuracy": 0.5,
+            "macro_f1": 0.6666666666666666,
+            "n": 4,
+            "per_label": {
+              "prediction": {
+                "precision": 0.6666666666666666,
+                "recall": 0.6666666666666666,
+                "f1": 0.6666666666666666,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "__extra__",
+                "actual": "prediction",
+                "count": 1
+              },
+              {
+                "expected": "prediction",
+                "actual": "__missing__",
+                "count": 1
+              },
+              {
+                "expected": "prediction",
+                "actual": "prediction",
+                "count": 2
+              }
+            ]
+          },
+          "verdict": {
+            "accuracy": null,
+            "macro_f1": null,
+            "n": 0,
+            "per_label": {},
+            "confusion": []
+          },
+          "extraction": {
+            "precision": 0.6666666666666666,
+            "recall": 0.6666666666666666
+          },
+          "factual_coverage": null,
+          "decisive_coverage": null,
+          "abstention_rate": null,
+          "false_accusation_rate": 0.0,
+          "extra_harmful_claims": 0,
+          "false_fraud_accusation_rate": 0.0,
+          "purpose_accuracy": 1.0,
+          "fraud_accuracy": 1.0,
+          "techniques": {
+            "per_type": {
+              "authority_appeal": {
+                "tn": 3,
+                "f1": null
+              },
+              "conspiracy_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "emotional_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "fear_appeal": {
+                "tp": 3,
+                "f1": 1.0
+              },
+              "unsupported_certainty": {
+                "tn": 3,
+                "f1": null
+              },
+              "urgency": {
+                "tp": 3,
+                "f1": 1.0
+              },
+              "us_vs_them": {
+                "tn": 3,
+                "f1": null
+              }
+            },
+            "macro_f1": 1.0
+          },
+          "ocr": {
+            "character_error_rate": null,
+            "word_error_rate": null,
+            "exact_normalized_transcription_rate": null,
+            "cases": 0
+          },
+          "statement_quote_compliance": 0.3333333333333333,
+          "technique_quote_compliance": 0.6666666666666666,
+          "citation_id_validity": null,
+          "citation_relevance": null,
+          "citation_coverage": null,
+          "latency_seconds": {
+            "p50": 1.914397167000061,
+            "p95": 2.1636087798000516,
+            "mean": 1.9115309586665414,
+            "min": 1.6288967499995124,
+            "max": 2.1912989590000507,
+            "all_attempts_p50": 1.914397167000061,
+            "all_attempts_p95": 2.1636087798000516
+          },
+          "usage": {
+            "input_tokens": {
+              "total_known": 3108,
+              "records_with_usage": 3
+            },
+            "output_tokens": {
+              "total_known": 430,
+              "records_with_usage": 3
+            },
+            "thinking_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "cached_input_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "requests": {
+              "total_known": 3,
+              "records_with_usage": 3
+            }
+          },
+          "counts": {
+            "expected_statements": 3,
+            "extracted_statements": 3,
+            "matched_statements": 2,
+            "nonharmful_statements": 3,
+            "false_accusations": 0,
+            "extra_harmful_claims": 0,
+            "statement_quotes_total": 3,
+            "statement_quotes_exact": 1,
+            "citations_total": 0,
+            "citation_relevance_denominator": 0,
+            "citations_valid": 0,
+            "technique_quotes_total": 6,
+            "technique_quotes_exact": 4,
+            "purpose_total": 3,
+            "purpose_correct": 3,
+            "fraud_total": 3,
+            "fraud_correct": 3,
+            "nonfraud_cases": 3,
+            "false_fraud_accusations": 0,
+            "relevant_citations": 0
+          }
+        },
+        "fraud": {
+          "attempted": 3,
+          "successful": 3,
+          "completion_rate": 1.0,
+          "status_counts": {
+            "ok": 3
+          },
+          "failure_codes": {},
+          "kind": {
+            "accuracy": 0.5,
+            "macro_f1": 0.42857142857142855,
+            "n": 6,
+            "per_label": {
+              "factual": {
+                "precision": 0.75,
+                "recall": 1.0,
+                "f1": 0.8571428571428571,
+                "support": 3
+              },
+              "unclear": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "support": 0
+              }
+            },
+            "confusion": [
+              {
+                "expected": "__extra__",
+                "actual": "factual",
+                "count": 1
+              },
+              {
+                "expected": "__extra__",
+                "actual": "unclear",
+                "count": 2
+              },
+              {
+                "expected": "factual",
+                "actual": "factual",
+                "count": 3
+              }
+            ]
+          },
+          "verdict": {
+            "accuracy": 0.75,
+            "macro_f1": 0.5,
+            "n": 4,
+            "per_label": {
+              "contradicted": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 3
+              },
+              "insufficient": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "support": 0
+              }
+            },
+            "confusion": [
+              {
+                "expected": "__extra__",
+                "actual": "insufficient",
+                "count": 1
+              },
+              {
+                "expected": "contradicted",
+                "actual": "contradicted",
+                "count": 3
+              }
+            ]
+          },
+          "extraction": {
+            "precision": 0.5,
+            "recall": 1.0
+          },
+          "factual_coverage": 1.0,
+          "decisive_coverage": 1.0,
+          "abstention_rate": 0.0,
+          "false_accusation_rate": null,
+          "extra_harmful_claims": 0,
+          "false_fraud_accusation_rate": null,
+          "purpose_accuracy": 1.0,
+          "fraud_accuracy": 1.0,
+          "techniques": {
+            "per_type": {
+              "authority_appeal": {
+                "tn": 3,
+                "f1": null
+              },
+              "conspiracy_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "emotional_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "fear_appeal": {
+                "tn": 3,
+                "f1": null
+              },
+              "unsupported_certainty": {
+                "tn": 3,
+                "f1": null
+              },
+              "urgency": {
+                "tn": 3,
+                "f1": null
+              },
+              "us_vs_them": {
+                "tn": 3,
+                "f1": null
+              }
+            },
+            "macro_f1": null
+          },
+          "ocr": {
+            "character_error_rate": null,
+            "word_error_rate": null,
+            "exact_normalized_transcription_rate": null,
+            "cases": 0
+          },
+          "statement_quote_compliance": 1.0,
+          "technique_quote_compliance": null,
+          "citation_id_validity": 1.0,
+          "citation_relevance": 1.0,
+          "citation_coverage": 1.0,
+          "latency_seconds": {
+            "p50": 1.9300917500004289,
+            "p95": 2.040493550300198,
+            "mean": 1.949165624999902,
+            "min": 1.8646447079991049,
+            "max": 2.0527604170001723,
+            "all_attempts_p50": 1.9300917500004289,
+            "all_attempts_p95": 2.040493550300198
+          },
+          "usage": {
+            "input_tokens": {
+              "total_known": 3492,
+              "records_with_usage": 3
+            },
+            "output_tokens": {
+              "total_known": 295,
+              "records_with_usage": 3
+            },
+            "thinking_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "cached_input_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "requests": {
+              "total_known": 3,
+              "records_with_usage": 3
+            }
+          },
+          "counts": {
+            "expected_statements": 3,
+            "extracted_statements": 6,
+            "matched_statements": 3,
+            "factual_expected": 3,
+            "factual_answered": 3,
+            "decisive_verdicts": 3,
+            "abstentions": 0,
+            "relevant_citations": 3,
+            "evidence_required_claims": 3,
+            "claims_with_relevant_citation": 3,
+            "extra_harmful_claims": 0,
+            "statement_quotes_total": 6,
+            "statement_quotes_exact": 6,
+            "citations_total": 3,
+            "citation_relevance_denominator": 3,
+            "citations_valid": 3,
+            "purpose_total": 3,
+            "purpose_correct": 3,
+            "fraud_total": 3,
+            "fraud_correct": 3
+          }
+        },
+        "insufficient_evidence": {
+          "attempted": 3,
+          "successful": 3,
+          "completion_rate": 1.0,
+          "status_counts": {
+            "ok": 3
+          },
+          "failure_codes": {},
+          "kind": {
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "n": 3,
+            "per_label": {
+              "factual": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "factual",
+                "actual": "factual",
+                "count": 3
+              }
+            ]
+          },
+          "verdict": {
+            "accuracy": 0.0,
+            "macro_f1": 0.0,
+            "n": 3,
+            "per_label": {
+              "contradicted": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "support": 0
+              },
+              "insufficient": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "insufficient",
+                "actual": "contradicted",
+                "count": 3
+              }
+            ]
+          },
+          "extraction": {
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "factual_coverage": 1.0,
+          "decisive_coverage": 1.0,
+          "abstention_rate": 0.0,
+          "false_accusation_rate": 1.0,
+          "extra_harmful_claims": 0,
+          "false_fraud_accusation_rate": 0.0,
+          "purpose_accuracy": 1.0,
+          "fraud_accuracy": 1.0,
+          "techniques": {
+            "per_type": {
+              "authority_appeal": {
+                "tn": 3,
+                "f1": null
+              },
+              "conspiracy_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "emotional_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "fear_appeal": {
+                "tn": 3,
+                "f1": null
+              },
+              "unsupported_certainty": {
+                "tn": 3,
+                "f1": null
+              },
+              "urgency": {
+                "tn": 3,
+                "f1": null
+              },
+              "us_vs_them": {
+                "tn": 3,
+                "f1": null
+              }
+            },
+            "macro_f1": null
+          },
+          "ocr": {
+            "character_error_rate": null,
+            "word_error_rate": null,
+            "exact_normalized_transcription_rate": null,
+            "cases": 0
+          },
+          "statement_quote_compliance": 1.0,
+          "technique_quote_compliance": null,
+          "citation_id_validity": 1.0,
+          "citation_relevance": 0.0,
+          "citation_coverage": null,
+          "latency_seconds": {
+            "p50": 1.6358427079994726,
+            "p95": 1.7900333333002891,
+            "mean": 1.6765035276663791,
+            "min": 1.5865022499992847,
+            "max": 1.8071656250003798,
+            "all_attempts_p50": 1.6358427079994726,
+            "all_attempts_p95": 1.7900333333002891
+          },
+          "usage": {
+            "input_tokens": {
+              "total_known": 3264,
+              "records_with_usage": 3
+            },
+            "output_tokens": {
+              "total_known": 194,
+              "records_with_usage": 3
+            },
+            "thinking_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "cached_input_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "requests": {
+              "total_known": 3,
+              "records_with_usage": 3
+            }
+          },
+          "counts": {
+            "expected_statements": 3,
+            "extracted_statements": 3,
+            "matched_statements": 3,
+            "factual_expected": 3,
+            "factual_answered": 3,
+            "decisive_verdicts": 3,
+            "abstentions": 0,
+            "nonharmful_statements": 3,
+            "false_accusations": 3,
+            "relevant_citations": 0,
+            "statement_quotes_total": 3,
+            "statement_quotes_exact": 3,
+            "citations_total": 3,
+            "citation_relevance_denominator": 3,
+            "citations_valid": 3,
+            "purpose_total": 3,
+            "purpose_correct": 3,
+            "fraud_total": 3,
+            "fraud_correct": 3,
+            "nonfraud_cases": 3,
+            "false_fraud_accusations": 0
+          }
+        },
+        "neutral_institutional_attribution": {
+          "attempted": 3,
+          "successful": 3,
+          "completion_rate": 1.0,
+          "status_counts": {
+            "ok": 3
+          },
+          "failure_codes": {},
+          "kind": {
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "n": 3,
+            "per_label": {
+              "factual": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "factual",
+                "actual": "factual",
+                "count": 3
+              }
+            ]
+          },
+          "verdict": {
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "n": 3,
+            "per_label": {
+              "supported": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "supported",
+                "actual": "supported",
+                "count": 3
+              }
+            ]
+          },
+          "extraction": {
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "factual_coverage": 1.0,
+          "decisive_coverage": 1.0,
+          "abstention_rate": 0.0,
+          "false_accusation_rate": 0.0,
+          "extra_harmful_claims": 0,
+          "false_fraud_accusation_rate": 0.0,
+          "purpose_accuracy": 1.0,
+          "fraud_accuracy": 1.0,
+          "techniques": {
+            "per_type": {
+              "authority_appeal": {
+                "tn": 3,
+                "f1": null
+              },
+              "conspiracy_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "emotional_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "fear_appeal": {
+                "tn": 3,
+                "f1": null
+              },
+              "unsupported_certainty": {
+                "tn": 3,
+                "f1": null
+              },
+              "urgency": {
+                "tn": 3,
+                "f1": null
+              },
+              "us_vs_them": {
+                "tn": 3,
+                "f1": null
+              }
+            },
+            "macro_f1": null
+          },
+          "ocr": {
+            "character_error_rate": null,
+            "word_error_rate": null,
+            "exact_normalized_transcription_rate": null,
+            "cases": 0
+          },
+          "statement_quote_compliance": 1.0,
+          "technique_quote_compliance": null,
+          "citation_id_validity": 1.0,
+          "citation_relevance": 1.0,
+          "citation_coverage": 1.0,
+          "latency_seconds": {
+            "p50": 1.8354603329999009,
+            "p95": 1.8712199583007532,
+            "mean": 1.7941330276668548,
+            "min": 1.6717454999998154,
+            "max": 1.875193250000848,
+            "all_attempts_p50": 1.8354603329999009,
+            "all_attempts_p95": 1.8712199583007532
+          },
+          "usage": {
+            "input_tokens": {
+              "total_known": 3225,
+              "records_with_usage": 3
+            },
+            "output_tokens": {
+              "total_known": 222,
+              "records_with_usage": 3
+            },
+            "thinking_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "cached_input_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "requests": {
+              "total_known": 3,
+              "records_with_usage": 3
+            }
+          },
+          "counts": {
+            "expected_statements": 3,
+            "extracted_statements": 3,
+            "matched_statements": 3,
+            "factual_expected": 3,
+            "factual_answered": 3,
+            "decisive_verdicts": 3,
+            "abstentions": 0,
+            "nonharmful_statements": 3,
+            "false_accusations": 0,
+            "relevant_citations": 3,
+            "evidence_required_claims": 3,
+            "claims_with_relevant_citation": 3,
+            "statement_quotes_total": 3,
+            "statement_quotes_exact": 3,
+            "citations_total": 3,
+            "citation_relevance_denominator": 3,
+            "citations_valid": 3,
+            "purpose_total": 3,
+            "purpose_correct": 3,
+            "fraud_total": 3,
+            "fraud_correct": 3,
+            "nonfraud_cases": 3,
+            "false_fraud_accusations": 0
+          }
+        },
+        "supported_fact": {
+          "attempted": 3,
+          "successful": 3,
+          "completion_rate": 1.0,
+          "status_counts": {
+            "ok": 3
+          },
+          "failure_codes": {},
+          "kind": {
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "n": 3,
+            "per_label": {
+              "factual": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "factual",
+                "actual": "factual",
+                "count": 3
+              }
+            ]
+          },
+          "verdict": {
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "n": 3,
+            "per_label": {
+              "supported": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "supported",
+                "actual": "supported",
+                "count": 3
+              }
+            ]
+          },
+          "extraction": {
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "factual_coverage": 1.0,
+          "decisive_coverage": 1.0,
+          "abstention_rate": 0.0,
+          "false_accusation_rate": 0.0,
+          "extra_harmful_claims": 0,
+          "false_fraud_accusation_rate": 0.0,
+          "purpose_accuracy": 1.0,
+          "fraud_accuracy": 1.0,
+          "techniques": {
+            "per_type": {
+              "authority_appeal": {
+                "tn": 3,
+                "f1": null
+              },
+              "conspiracy_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "emotional_framing": {
+                "tn": 3,
+                "f1": null
+              },
+              "fear_appeal": {
+                "tn": 3,
+                "f1": null
+              },
+              "unsupported_certainty": {
+                "tn": 3,
+                "f1": null
+              },
+              "urgency": {
+                "tn": 3,
+                "f1": null
+              },
+              "us_vs_them": {
+                "tn": 3,
+                "f1": null
+              }
+            },
+            "macro_f1": null
+          },
+          "ocr": {
+            "character_error_rate": null,
+            "word_error_rate": null,
+            "exact_normalized_transcription_rate": null,
+            "cases": 0
+          },
+          "statement_quote_compliance": 1.0,
+          "technique_quote_compliance": null,
+          "citation_id_validity": 1.0,
+          "citation_relevance": 1.0,
+          "citation_coverage": 1.0,
+          "latency_seconds": {
+            "p50": 1.6502526249996663,
+            "p95": 2.606895700000132,
+            "mean": 1.997197027666516,
+            "min": 1.6281490829996983,
+            "max": 2.7131893750001836,
+            "all_attempts_p50": 1.6502526249996663,
+            "all_attempts_p95": 2.606895700000132
+          },
+          "usage": {
+            "input_tokens": {
+              "total_known": 3393,
+              "records_with_usage": 3
+            },
+            "output_tokens": {
+              "total_known": 200,
+              "records_with_usage": 3
+            },
+            "thinking_tokens": {
+              "total_known": 235,
+              "records_with_usage": 1
+            },
+            "cached_input_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "requests": {
+              "total_known": 3,
+              "records_with_usage": 3
+            }
+          },
+          "counts": {
+            "expected_statements": 3,
+            "extracted_statements": 3,
+            "matched_statements": 3,
+            "factual_expected": 3,
+            "factual_answered": 3,
+            "decisive_verdicts": 3,
+            "abstentions": 0,
+            "nonharmful_statements": 3,
+            "false_accusations": 0,
+            "relevant_citations": 3,
+            "evidence_required_claims": 3,
+            "claims_with_relevant_citation": 3,
+            "statement_quotes_total": 3,
+            "statement_quotes_exact": 3,
+            "citations_total": 3,
+            "citation_relevance_denominator": 3,
+            "citations_valid": 3,
+            "purpose_total": 3,
+            "purpose_correct": 3,
+            "fraud_total": 3,
+            "fraud_correct": 3,
+            "nonfraud_cases": 3,
+            "false_fraud_accusations": 0
+          }
+        }
+      },
+      "by_modality": {
+        "text": {
+          "attempted": 18,
+          "successful": 18,
+          "completion_rate": 1.0,
+          "status_counts": {
+            "ok": 18
+          },
+          "failure_codes": {},
+          "kind": {
+            "accuracy": 0.7727272727272727,
+            "macro_f1": 0.5448028673835126,
+            "n": 22,
+            "per_label": {
+              "factual": {
+                "precision": 0.9375,
+                "recall": 1.0,
+                "f1": 0.967741935483871,
+                "support": 15
+              },
+              "prediction": {
+                "precision": 0.6666666666666666,
+                "recall": 0.6666666666666666,
+                "f1": 0.6666666666666666,
+                "support": 3
+              },
+              "unclear": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "support": 0
+              }
+            },
+            "confusion": [
+              {
+                "expected": "__extra__",
+                "actual": "factual",
+                "count": 1
+              },
+              {
+                "expected": "__extra__",
+                "actual": "prediction",
+                "count": 1
+              },
+              {
+                "expected": "__extra__",
+                "actual": "unclear",
+                "count": 2
+              },
+              {
+                "expected": "factual",
+                "actual": "factual",
+                "count": 15
+              },
+              {
+                "expected": "prediction",
+                "actual": "__missing__",
+                "count": 1
+              },
+              {
+                "expected": "prediction",
+                "actual": "prediction",
+                "count": 2
+              }
+            ]
+          },
+          "verdict": {
+            "accuracy": 0.75,
+            "macro_f1": 0.6,
+            "n": 16,
+            "per_label": {
+              "supported": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 6
+              },
+              "contradicted": {
+                "precision": 0.6666666666666666,
+                "recall": 1.0,
+                "f1": 0.8,
+                "support": 6
+              },
+              "insufficient": {
+                "precision": 0.0,
+                "recall": 0.0,
+                "f1": 0.0,
+                "support": 3
+              }
+            },
+            "confusion": [
+              {
+                "expected": "__extra__",
+                "actual": "insufficient",
+                "count": 1
+              },
+              {
+                "expected": "contradicted",
+                "actual": "contradicted",
+                "count": 6
+              },
+              {
+                "expected": "insufficient",
+                "actual": "contradicted",
+                "count": 3
+              },
+              {
+                "expected": "supported",
+                "actual": "supported",
+                "count": 6
+              }
+            ]
+          },
+          "extraction": {
+            "precision": 0.8095238095238095,
+            "recall": 0.9444444444444444
+          },
+          "factual_coverage": 1.0,
+          "decisive_coverage": 1.0,
+          "abstention_rate": 0.0,
+          "false_accusation_rate": 0.25,
+          "extra_harmful_claims": 0,
+          "false_fraud_accusation_rate": 0.0,
+          "purpose_accuracy": 1.0,
+          "fraud_accuracy": 1.0,
+          "techniques": {
+            "per_type": {
+              "authority_appeal": {
+                "tn": 18,
+                "f1": null
+              },
+              "conspiracy_framing": {
+                "tn": 18,
+                "f1": null
+              },
+              "emotional_framing": {
+                "tn": 18,
+                "f1": null
+              },
+              "fear_appeal": {
+                "tn": 15,
+                "tp": 3,
+                "f1": 1.0
+              },
+              "unsupported_certainty": {
+                "tn": 18,
+                "f1": null
+              },
+              "urgency": {
+                "tn": 15,
+                "tp": 3,
+                "f1": 1.0
+              },
+              "us_vs_them": {
+                "tn": 18,
+                "f1": null
+              }
+            },
+            "macro_f1": 1.0
+          },
+          "ocr": {
+            "character_error_rate": null,
+            "word_error_rate": null,
+            "exact_normalized_transcription_rate": null,
+            "cases": 0
+          },
+          "statement_quote_compliance": 0.9047619047619048,
+          "technique_quote_compliance": 0.6666666666666666,
+          "citation_id_validity": 1.0,
+          "citation_relevance": 0.8,
+          "citation_coverage": 1.0,
+          "latency_seconds": {
+            "p50": 1.7394555625000976,
+            "p95": 2.26958252140007,
+            "mean": 1.8232448032221227,
+            "min": 1.563240333000067,
+            "max": 2.7131893750001836,
+            "all_attempts_p50": 1.7394555625000976,
+            "all_attempts_p95": 2.26958252140007
+          },
+          "usage": {
+            "input_tokens": {
+              "total_known": 19950,
+              "records_with_usage": 18
+            },
+            "output_tokens": {
+              "total_known": 1541,
+              "records_with_usage": 18
+            },
+            "thinking_tokens": {
+              "total_known": 235,
+              "records_with_usage": 1
+            },
+            "cached_input_tokens": {
+              "total_known": null,
+              "records_with_usage": 0
+            },
+            "requests": {
+              "total_known": 18,
+              "records_with_usage": 18
+            }
+          },
+          "counts": {
+            "expected_statements": 18,
+            "extracted_statements": 21,
+            "matched_statements": 17,
+            "factual_expected": 15,
+            "factual_answered": 15,
+            "decisive_verdicts": 15,
+            "abstentions": 0,
+            "nonharmful_statements": 12,
+            "false_accusations": 3,
+            "relevant_citations": 12,
+            "evidence_required_claims": 12,
+            "claims_with_relevant_citation": 12,
+            "statement_quotes_total": 21,
+            "statement_quotes_exact": 19,
+            "citations_total": 15,
+            "citation_relevance_denominator": 15,
+            "citations_valid": 15,
+            "purpose_total": 18,
+            "purpose_correct": 18,
+            "fraud_total": 18,
+            "fraud_correct": 18,
+            "nonfraud_cases": 15,
+            "false_fraud_accusations": 0,
+            "extra_harmful_claims": 0,
+            "technique_quotes_total": 6,
+            "technique_quotes_exact": 4
+          }
+        }
+      }
+    }
+  },
+  "paired_comparisons": [
+    {
+      "track": "fixed",
+      "left": "flash-lite-minimal",
+      "right": "flash-low",
+      "metric": "kind_accuracy",
+      "difference_right_minus_left": -0.027777777777777773,
+      "paired_cases": 6,
+      "semantic_clusters": 6,
+      "bootstrap_95_interval": [
+        -0.08333333333333331,
+        0.0
+      ],
+      "bootstrap_samples": 2000,
+      "unit": "semantic_cluster",
+      "conditioning": "Only successful paired cases; consult completion rates separately. Development cases are not a random population sample."
+    },
+    {
+      "track": "fixed",
+      "left": "flash-lite-minimal",
+      "right": "flash-low",
+      "metric": "verdict_accuracy",
+      "difference_right_minus_left": 0.03333333333333335,
+      "paired_cases": 5,
+      "semantic_clusters": 5,
+      "bootstrap_95_interval": [
+        0.0,
+        0.10000000000000005
+      ],
+      "bootstrap_samples": 2000,
+      "unit": "semantic_cluster",
+      "conditioning": "Only successful paired cases; consult completion rates separately. Development cases are not a random population sample."
+    },
+    {
+      "track": "fixed",
+      "left": "flash-lite-minimal",
+      "right": "flash-low",
+      "metric": "false_accusation_rate",
+      "difference_right_minus_left": 0.0,
+      "paired_cases": 4,
+      "semantic_clusters": 4,
+      "bootstrap_95_interval": [
+        0.0,
+        0.0
+      ],
+      "bootstrap_samples": 2000,
+      "unit": "semantic_cluster",
+      "conditioning": "Only successful paired cases; consult completion rates separately. Development cases are not a random population sample."
+    },
+    {
+      "track": "fixed",
+      "left": "flash-lite-minimal",
+      "right": "flash-low",
+      "metric": "purpose_accuracy",
+      "difference_right_minus_left": 0.0,
+      "paired_cases": 6,
+      "semantic_clusters": 6,
+      "bootstrap_95_interval": [
+        0.0,
+        0.0
+      ],
+      "bootstrap_samples": 2000,
+      "unit": "semantic_cluster",
+      "conditioning": "Only successful paired cases; consult completion rates separately. Development cases are not a random population sample."
+    },
+    {
+      "track": "fixed",
+      "left": "flash-lite-minimal",
+      "right": "flash-low",
+      "metric": "duration_seconds",
+      "difference_right_minus_left": 0.3093669142222098,
+      "paired_cases": 6,
+      "semantic_clusters": 6,
+      "bootstrap_95_interval": [
+        0.17267707850007566,
+        0.44290912022218737
+      ],
+      "bootstrap_samples": 2000,
+      "unit": "semantic_cluster",
+      "conditioning": "Only successful paired cases; consult completion rates separately. Development cases are not a random population sample."
+    }
+  ]
+}

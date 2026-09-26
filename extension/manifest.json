@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "CLAR \u2014 Facebook post checker",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "minimum_chrome_version": "141",
   "description": "Check Facebook posts against evidence and explain opinions, persuasion cues, and apparent purpose.",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxnpXIWxk70qBoIUemFMo6KGcnnvoQJXjnk9kfEKc3Zp+oZ2ZjTHihwP0c7mg0wu9bq8hkFu1/nKinf7NAIaUxA42pKsqjTSsJt/diXRKlx9DrAzgA5vDKz92ILHf4sJG3QsKyGNIaeZiUxKKbkHGmzW7G2e36/B9fzVirsRWSjzqd5QztnEsFBxAZY+NRUZ6RRedzoJh/ACjbMlyRkwYWxj8j7k+6RI8rJ4VBBQCkKC+/hKfADaQP0+qCQpSw9VnBkN0mnP8Up6Kd7K4lcCXbEyovv2RhQiBHyHRnEwu43bbCtS4B+368kmZYkk51so3euWlq/WoacSuRRb9iFeuKQIDAQAB",

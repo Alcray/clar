@@ -278,6 +278,50 @@ class RunnerTests(unittest.TestCase):
         self.assertEqual(result['status'], 'invalid_output')
         self.assertNotIn('scores', result)
 
+    def test_saved_invalid_task_answer_has_safe_reason_and_remains_unscored(self):
+        value = golden(self.case)
+        value['statements'][0]['verdict'] = 'not_applicable'
+        with patch('benchmarks.runner.importlib.import_module', return_value=self.fake_runtime(lambda *a, **k: value)):
+            saved = execute_case(self.config, self.case, save_responses=True)
+            unsaved = execute_case(self.config, self.case, save_responses=False)
+        self.assertEqual(saved['status'], 'invalid_output')
+        self.assertEqual(saved['error']['code'], 'benchmark_kind_verdict_mismatch')
+        self.assertEqual(saved['error']['reason'], 'A statement kind and verdict disagree about factual applicability.')
+        self.assertEqual(saved['invalid_response'], value)
+        self.assertFalse(saved['invalid_response_truncated'])
+        self.assertNotIn('scores', saved)
+        self.assertNotIn('response', saved)
+        self.assertNotIn('invalid_response', unsaved)
+
+    def test_saved_invalid_answer_is_bounded_and_never_keeps_envelope_fields(self):
+        value = golden(self.case)
+        item = value['statements'][0]
+        item.update(text='\x00Ж' * 10000, confidence=10 ** 1000, headers={'Authorization': 'SHOULD_NOT_APPEAR'})
+        item['evidence_ids'] = ['LONG_ID' * 200 for _ in range(100)]
+        value['statements'] = [copy.deepcopy(item) for _ in range(40)]
+        value['techniques'] = [{'type': 'x' * 1000, 'quote': 'Ж' * 10000, 'api_key': 'SHOULD_NOT_APPEAR'} for _ in range(40)]
+        value['headers'] = {'Authorization': 'SHOULD_NOT_APPEAR'}
+        value['provider_envelope'] = {'secret': 'SHOULD_NOT_APPEAR'}
+        with patch('benchmarks.runner.importlib.import_module', return_value=self.fake_runtime(lambda *a, **k: value)):
+            saved = execute_case(self.config, self.case, save_responses=True)
+        encoded = json.dumps(saved['invalid_response'], ensure_ascii=False).encode()
+        self.assertLessEqual(len(encoded), 65536)
+        self.assertTrue(saved['invalid_response_truncated'])
+        self.assertNotIn('SHOULD_NOT_APPEAR', json.dumps(saved))
+        self.assertNotIn('headers', json.dumps(saved['invalid_response']))
+        self.assertEqual(saved['error']['code'], 'benchmark_result_shape')
+        self.assertNotIn('scores', saved)
+
+    def test_raw_invalid_json_is_not_saved_even_with_save_responses(self):
+        def call(*args, **kwargs):
+            raise json.JSONDecodeError('SHOULD_NOT_APPEAR', 'raw provider body', 0)
+        with patch('benchmarks.runner.importlib.import_module', return_value=self.fake_runtime(call)):
+            result = execute_case(self.config, self.case, save_responses=True)
+        self.assertEqual(result['status'], 'invalid_output')
+        self.assertNotIn('invalid_response', result)
+        self.assertNotIn('SHOULD_NOT_APPEAR', json.dumps(result))
+        self.assertNotIn('raw provider body', json.dumps(result))
+
     def test_live_pipeline_bypasses_cache_and_records_dated_sources(self):
         case = next(c for c in self.dataset['cases'] if c['track'] == 'live')
         observed = {}
@@ -331,6 +375,28 @@ class RunnerTests(unittest.TestCase):
                 self.assertEqual(main(['run', '--matrix', str(matrix), '--limit', '1', '--dry-run', '--out', str(out)]), 0)
             self.assertTrue((out / 'manifest.json').exists())
             self.assertFalse((out / 'records.jsonl').exists())
+
+    def test_report_failures_do_not_split_reliability_table(self):
+        from benchmarks.report import write_report
+        first = row(self.case, name='a-failed')
+        first.update(status='invalid_output', error={'code': 'invalid_output'})
+        first.pop('scores')
+        second = row(self.case, name='b-success')
+        summary = {'manifest': {'run_id': 'format-test', 'dataset_version': 'editorial-v1', 'benchmark_version': '1.0.0'},
+                   'groups': summarize_groups([first, second]), 'paired_comparisons': []}
+        with tempfile.TemporaryDirectory() as tmp:
+            write_report(tmp, summary)
+            report = (Path(tmp) / 'report.md').read_text()
+        section = report.split('## Reliability and source discipline\n', 1)[1].split('## By language', 1)[0]
+        lines = section.strip().splitlines()
+        # Header, delimiter, and BOTH data rows must form one contiguous table.
+        self.assertTrue(all(line.startswith('|') for line in lines[:4]))
+        self.assertTrue(lines[2].startswith('| a-failed/fixed |'))
+        self.assertTrue(lines[3].startswith('| b-success/fixed |'))
+        self.assertEqual(lines[4], '')
+        self.assertIn('a-failed/fixed failures:', lines[5])
+        self.assertIn('Fixed-track duration covers one model request', report)
+        self.assertIn('Live-track duration covers the full CLAR pipeline', report)
 
     def test_full_mock_run_produces_report_and_excludes_warmups(self):
         def fake(model, case, *args):

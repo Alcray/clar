@@ -36,8 +36,28 @@ FIXED_SCHEMA = {
     }, 'required': ['statements', 'purpose', 'techniques', 'fraud_signal']}
 
 
+VALIDATION_REASONS = {
+    'benchmark_invalid_output': 'The parsed answer failed benchmark task validation.',
+    'benchmark_result_shape': 'The result fields do not match the task contract.',
+    'benchmark_transcription': 'The screenshot answer lacks a text transcription.',
+    'benchmark_purpose_fraud': 'The purpose or fraud flag has an invalid value.',
+    'benchmark_statement_count': 'The answer must contain between one and twelve statements.',
+    'benchmark_statement_fields': 'A statement has missing or unexpected fields.',
+    'benchmark_empty_statement': 'A statement has empty or non-text content.',
+    'benchmark_classification': 'A statement kind or verdict is outside the allowed labels.',
+    'benchmark_kind_verdict_mismatch': 'A statement kind and verdict disagree about factual applicability.',
+    'benchmark_confidence': 'A confidence value is outside the required numeric range.',
+    'benchmark_evidence_ids': 'Evidence IDs must be an array of strings.',
+    'benchmark_techniques': 'Techniques must be an array.',
+    'benchmark_technique_fields': 'A technique has invalid fields, type, or quote.',
+}
+
+
 class OutputValidationError(ValueError):
-    pass
+    def __init__(self, message, code='benchmark_invalid_output'):
+        super().__init__(message)
+        self.code = code if code in VALIDATION_REASONS else 'benchmark_invalid_output'
+        self.reason = VALIDATION_REASONS[self.code]
 
 
 def schema_for(case):
@@ -54,30 +74,30 @@ def validate_output(value, image=False):
     """Provider schemas differ; validate scored JSON uniformly before scoring."""
     required = set(FIXED_SCHEMA['required']) | ({'original_text'} if image else set())
     if not isinstance(value, dict) or set(value) != required:
-        raise OutputValidationError('Expected the fixed-evidence result object.')
+        raise OutputValidationError('Expected the fixed-evidence result object.', 'benchmark_result_shape')
     if image and not isinstance(value['original_text'], str):
-        raise OutputValidationError('Image result needs an original_text transcription.')
+        raise OutputValidationError('Image result needs an original_text transcription.', 'benchmark_transcription')
     if value['purpose'] not in PURPOSES or type(value['fraud_signal']) is not bool:
-        raise OutputValidationError('Invalid purpose or fraud flag.')
+        raise OutputValidationError('Invalid purpose or fraud flag.', 'benchmark_purpose_fraud')
     if not isinstance(value['statements'], list) or not 1 <= len(value['statements']) <= 12:
-        raise OutputValidationError('Expected 1 to 12 statements.')
+        raise OutputValidationError('Expected 1 to 12 statements.', 'benchmark_statement_count')
     for item in value['statements']:
         fields = {'text', 'kind', 'verdict', 'confidence', 'evidence_ids'}
         if not isinstance(item, dict) or set(item) != fields:
-            raise OutputValidationError('Invalid statement fields.')
+            raise OutputValidationError('Invalid statement fields.', 'benchmark_statement_fields')
         if not isinstance(item['text'], str) or not item['text'].strip():
-            raise OutputValidationError('Statement text is empty.')
+            raise OutputValidationError('Statement text is empty.', 'benchmark_empty_statement')
         if item['kind'] not in KINDS or item['verdict'] not in VERDICTS:
-            raise OutputValidationError('Invalid statement classification.')
+            raise OutputValidationError('Invalid statement classification.', 'benchmark_classification')
         if (item['kind'] == 'factual') == (item['verdict'] == 'not_applicable'):
-            raise OutputValidationError('Statement kind and verdict applicability disagree.')
+            raise OutputValidationError('Statement kind and verdict applicability disagree.', 'benchmark_kind_verdict_mismatch')
         if type(item['confidence']) not in (int, float) or not 0 <= item['confidence'] <= 1:
-            raise OutputValidationError('Invalid statement confidence.')
+            raise OutputValidationError('Invalid statement confidence.', 'benchmark_confidence')
         if not isinstance(item['evidence_ids'], list) or any(not isinstance(x, str) for x in item['evidence_ids']):
-            raise OutputValidationError('Invalid evidence IDs.')
+            raise OutputValidationError('Invalid evidence IDs.', 'benchmark_evidence_ids')
     if not isinstance(value['techniques'], list):
-        raise OutputValidationError('Invalid techniques.')
+        raise OutputValidationError('Invalid techniques.', 'benchmark_techniques')
     for item in value['techniques']:
         if not isinstance(item, dict) or set(item) != {'type', 'quote'} or item['type'] not in TECHNIQUES or not isinstance(item['quote'], str):
-            raise OutputValidationError('Invalid technique.')
+            raise OutputValidationError('Invalid technique.', 'benchmark_technique_fields')
     return value
