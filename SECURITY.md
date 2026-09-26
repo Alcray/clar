@@ -8,7 +8,7 @@ The supported deployment is the latest tagged release using `python -m app` or t
 
 - Public mode requires active invitations. Extension tokens and web sessions are separate and revocable.
 - A single process owns the bounded in-memory job queue and runtime directory. Horizontal scaling requires a shared durable queue and transactional state first.
-- Host and browser-origin checks, bounded request sizes, request/model deadlines and bounded workers are enforced. Keep the app behind HTTPS for remote browser sessions.
+- Host and browser-origin checks, bounded request sizes, request deadlines, model network timeouts and bounded workers are enforced. Keep the app behind HTTPS for remote browser sessions.
 - Model endpoints are operator configuration. Never accept an arbitrary endpoint or source URL from an analyzed post.
 - Keep `.env`, runtime records, private keys and benchmark credentials outside Git and release packages. Run `python tools/check_release.py` before publication.
 - Maintain dependencies and model servers. A supported HTTP protocol does not guarantee that every model or server supports vision or strict JSON output.

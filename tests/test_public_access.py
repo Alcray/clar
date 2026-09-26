@@ -1,5 +1,6 @@
 """Public Funnel invitations protect model calls and extension pairing."""
 
+from contextlib import ExitStack
 import http.client
 import importlib.util
 import json
@@ -40,24 +41,26 @@ class PublicAccessTests(unittest.TestCase):
         cls.thread.join(timeout=2)
 
     def setUp(self):
-        self.directory = self.enterContext(tempfile.TemporaryDirectory())
+        self._contexts = ExitStack()
+        self.addCleanup(self._contexts.close)
+        self.directory = self._contexts.enter_context(tempfile.TemporaryDirectory())
         self.invites_path = Path(self.directory) / 'invites.json'
         self.usage_path = Path(self.directory) / 'usage.json'
         self.feedback_path = Path(self.directory) / 'feedback.jsonl'
         self.created = manage_invites.create_invite('reviewer-1', self.invites_path)
         self.owner_token = 'private-owner-token-do-not-use-publicly'
         self.local_analyze = Mock(return_value={'verdict': 'test result'})
-        self.enterContext(patch.object(server, 'PUBLIC_MODE', True))
-        self.enterContext(patch.object(server, 'PUBLIC_HOST', 'clar.example.org'))
-        self.enterContext(patch.object(server, 'INVITES_PATH', self.invites_path))
-        self.enterContext(patch.object(server, 'USAGE_PATH', self.usage_path))
-        self.enterContext(patch.object(server, 'FEEDBACK_PATH', self.feedback_path))
-        self.enterContext(patch.object(server, 'ALLOWED_HOSTS', {
+        self._contexts.enter_context(patch.object(server, 'PUBLIC_MODE', True))
+        self._contexts.enter_context(patch.object(server, 'PUBLIC_HOST', 'clar.example.org'))
+        self._contexts.enter_context(patch.object(server, 'INVITES_PATH', self.invites_path))
+        self._contexts.enter_context(patch.object(server, 'USAGE_PATH', self.usage_path))
+        self._contexts.enter_context(patch.object(server, 'FEEDBACK_PATH', self.feedback_path))
+        self._contexts.enter_context(patch.object(server, 'ALLOWED_HOSTS', {
             '127.0.0.1', 'localhost', 'private.clar.example.org', 'clar.example.org',
         }))
-        self.enterContext(patch.dict(os.environ, {'EXTENSION_TOKEN': self.owner_token}, clear=True))
-        self.enterContext(patch.object(server, 'local_status', return_value=True))
-        self.enterContext(patch.dict(sys.modules, {
+        self._contexts.enter_context(patch.dict(os.environ, {'EXTENSION_TOKEN': self.owner_token}, clear=True))
+        self._contexts.enter_context(patch.object(server, 'local_status', return_value=True))
+        self._contexts.enter_context(patch.dict(sys.modules, {
             'analysis': types.SimpleNamespace(
                 analyze=Mock(return_value={'verdict': 'test result'}),
                 AnalysisError=type('AnalysisError', (Exception,), {}),

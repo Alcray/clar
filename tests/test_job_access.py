@@ -1,4 +1,5 @@
 """Exercise the async HTTP contract with real invitation/quota logic, no models."""
+from contextlib import ExitStack
 import http.client
 import importlib.util
 import json
@@ -35,7 +36,9 @@ class JobAccessTests(unittest.TestCase):
         cls.thread.join(timeout=2)
 
     def setUp(self):
-        directory = self.enterContext(tempfile.TemporaryDirectory())
+        self._contexts = ExitStack()
+        self.addCleanup(self._contexts.close)
+        directory = self._contexts.enter_context(tempfile.TemporaryDirectory())
         self.invites = Path(directory) / 'invites.json'
         self.usage = Path(directory) / 'usage.json'
         self.alice = manage_invites.create_invite('alice', self.invites)
@@ -45,16 +48,16 @@ class JobAccessTests(unittest.TestCase):
         self.started = threading.Event()
         self.release = threading.Event()
         self.addCleanup(self.release.set)
-        self.enterContext(patch.object(server, 'JOBS', self.manager))
-        self.enterContext(patch.object(server, 'PUBLIC_MODE', True))
-        self.enterContext(patch.object(server, 'PUBLIC_HOST', 'clar.example.test'))
-        self.enterContext(patch.object(server, 'ALLOWED_HOSTS', {'clar.example.test', '127.0.0.1'}))
-        self.enterContext(patch.object(server, 'INVITES_PATH', self.invites))
-        self.enterContext(patch.object(server, 'USAGE_PATH', self.usage))
-        self.enterContext(patch.object(server, 'GATE', threading.BoundedSemaphore(2)))
-        self.enterContext(patch.dict(os.environ, {'VERTEX_API_KEY': 'fake-test-server-key'}, clear=True))
-        self.analyze = self.enterContext(patch.object(analysis, 'analyze', side_effect=self.run_analysis))
-        self.precheck = self.enterContext(patch.object(analysis, 'precheck', side_effect=self.run_precheck))
+        self._contexts.enter_context(patch.object(server, 'JOBS', self.manager))
+        self._contexts.enter_context(patch.object(server, 'PUBLIC_MODE', True))
+        self._contexts.enter_context(patch.object(server, 'PUBLIC_HOST', 'clar.example.test'))
+        self._contexts.enter_context(patch.object(server, 'ALLOWED_HOSTS', {'clar.example.test', '127.0.0.1'}))
+        self._contexts.enter_context(patch.object(server, 'INVITES_PATH', self.invites))
+        self._contexts.enter_context(patch.object(server, 'USAGE_PATH', self.usage))
+        self._contexts.enter_context(patch.object(server, 'GATE', threading.BoundedSemaphore(2)))
+        self._contexts.enter_context(patch.dict(os.environ, {'VERTEX_API_KEY': 'fake-test-server-key'}, clear=True))
+        self.analyze = self._contexts.enter_context(patch.object(analysis, 'analyze', side_effect=self.run_analysis))
+        self.precheck = self._contexts.enter_context(patch.object(analysis, 'precheck', side_effect=self.run_precheck))
 
     def run_analysis(self, body, key, model, provider='gemini', progress=None):
         if progress:

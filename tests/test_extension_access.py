@@ -1,4 +1,5 @@
 """Exercise extension trust boundaries without loading credentials or calling models."""
+from contextlib import ExitStack
 import http.client
 import importlib.util
 import json
@@ -36,13 +37,15 @@ class ExtensionAccessTests(unittest.TestCase):
         cls.thread.join(timeout=2)
 
     def setUp(self):
+        self._contexts = ExitStack()
+        self.addCleanup(self._contexts.close)
         self.token = 'test-only-pairing-token'
         self.analyze = Mock(return_value={'verdict': 'test result'})
         self.local_analyze = Mock(return_value={'verdict': 'test result'})
         self.status = Mock(return_value=True)
-        self.enterContext(patch.dict(os.environ, {'EXTENSION_TOKEN': self.token}, clear=True))
-        self.enterContext(patch.object(server, 'local_status', self.status))
-        self.enterContext(patch.dict(sys.modules, {
+        self._contexts.enter_context(patch.dict(os.environ, {'EXTENSION_TOKEN': self.token}, clear=True))
+        self._contexts.enter_context(patch.object(server, 'local_status', self.status))
+        self._contexts.enter_context(patch.dict(sys.modules, {
             'analysis': types.SimpleNamespace(analyze=self.analyze, AnalysisError=type('AnalysisError', (Exception,), {})),
             'local_analysis': types.SimpleNamespace(analyze_local=self.local_analyze),
         }))
@@ -202,8 +205,10 @@ class ExtensionAccessTests(unittest.TestCase):
 
 class ExtensionTokenTests(unittest.TestCase):
     def setUp(self):
-        self.enterContext(patch.dict(os.environ, {}, clear=True))
-        self.directory = self.enterContext(tempfile.TemporaryDirectory())
+        self._contexts = ExitStack()
+        self.addCleanup(self._contexts.close)
+        self._contexts.enter_context(patch.dict(os.environ, {}, clear=True))
+        self.directory = self._contexts.enter_context(tempfile.TemporaryDirectory())
         self.path = Path(self.directory) / '.env'
 
     def test_startup_persists_token_and_preserves_existing_settings(self):

@@ -108,7 +108,7 @@ docker compose up -d clar
 
 Users must download the rebuilt extension and reload it in Chrome. Runtime environment changes alone cannot change an extension's permitted origins. For a native installation, rebuild with `python tools/build_extension.py --backend https://clar.example.org --default-provider local` before restarting the app.
 
-On native installations, `manage_invites.py` reads exported environment variables rather than loading `.env`. If you customize `CLAR_RUNTIME_DIR` or `CLAR_INVITES_FILE`, export the same values before creating, listing or revoking invitations. Compose passes the container's configured values automatically.
+On native installations, `manage_invites.py` reads the exported `CLAR_INVITES_FILE` variable rather than loading `.env` or reading `CLAR_RUNTIME_DIR`. If you customize the runtime directory, explicitly export `CLAR_INVITES_FILE=/path/to/your/runtime/invites.json` before creating, listing or revoking invitations, matching the application's invitation path. Compose passes the container's configured values automatically.
 
 ## Operation and limits
 

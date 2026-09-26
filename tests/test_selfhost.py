@@ -1,4 +1,5 @@
 """Production HTTP transport: real request decisions, fake model calls only."""
+from contextlib import ExitStack
 import asyncio
 from email.message import Message
 import json
@@ -17,22 +18,24 @@ from jobs import JobManager
 
 class SelfHostTests(unittest.IsolatedAsyncioTestCase):
     def setUp(self):
-        self.folder = self.enterContext(tempfile.TemporaryDirectory())
+        self._contexts = ExitStack()
+        self.addCleanup(self._contexts.close)
+        self.folder = self._contexts.enter_context(tempfile.TemporaryDirectory())
         self.root = Path(self.folder)
         self.invites = self.root / 'invites.json'
         self.alice = manage_invites.create_invite('alice', self.invites)
         self.bob = manage_invites.create_invite('bob', self.invites)
-        self.enterContext(patch.dict(os.environ, {'CLAR_LOAD_DOTENV': '0', 'HOST': '127.0.0.1',
+        self._contexts.enter_context(patch.dict(os.environ, {'CLAR_LOAD_DOTENV': '0', 'HOST': '127.0.0.1',
                                                   'VERTEX_API_KEY': 'test-not-a-secret'}, clear=True))
-        self.enterContext(patch.object(app.server, 'PUBLIC_MODE', True))
-        self.enterContext(patch.object(app.server, 'PUBLIC_HOST', 'clar.example.org'))
-        self.enterContext(patch.object(app.server, 'ALLOWED_HOSTS', {'clar.example.org', '127.0.0.1'}))
-        self.enterContext(patch.object(app.server, 'INVITES_PATH', self.invites))
-        self.enterContext(patch.object(app.server, 'USAGE_PATH', self.root / 'usage.json'))
-        self.enterContext(patch.object(app.server, 'RUNTIME_DIR', self.root))
-        self.enterContext(patch.object(app.server, 'local_status', return_value=True))
+        self._contexts.enter_context(patch.object(app.server, 'PUBLIC_MODE', True))
+        self._contexts.enter_context(patch.object(app.server, 'PUBLIC_HOST', 'clar.example.org'))
+        self._contexts.enter_context(patch.object(app.server, 'ALLOWED_HOSTS', {'clar.example.org', '127.0.0.1'}))
+        self._contexts.enter_context(patch.object(app.server, 'INVITES_PATH', self.invites))
+        self._contexts.enter_context(patch.object(app.server, 'USAGE_PATH', self.root / 'usage.json'))
+        self._contexts.enter_context(patch.object(app.server, 'RUNTIME_DIR', self.root))
+        self._contexts.enter_context(patch.object(app.server, 'local_status', return_value=True))
         self.manager = JobManager()
-        self.enterContext(patch.object(app.server, 'JOBS', self.manager))
+        self._contexts.enter_context(patch.object(app.server, 'JOBS', self.manager))
         self.app = app.ClarASGI()
         self.app.ready = True
         self.addCleanup(self.app.executor.shutdown, wait=True, cancel_futures=True)

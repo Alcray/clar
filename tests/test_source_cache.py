@@ -1,3 +1,4 @@
+from contextlib import ExitStack
 import concurrent.futures
 import threading
 import unittest
@@ -8,6 +9,8 @@ import local_analysis as local
 
 class SourceCacheTests(unittest.TestCase):
     def setUp(self):
+        self._contexts = ExitStack()
+        self.addCleanup(self._contexts.close)
         self.source = dict(local.SOURCES[0])
         self.document = {
             **self.source,
@@ -16,10 +19,10 @@ class SourceCacheTests(unittest.TestCase):
             'retrieved_at': '2026-09-25T12:00:00Z',
             'metadata': {'edition': 'original'},
         }
-        self.enterContext(patch.dict(local._SOURCE_CACHE, {}, clear=True))
-        self.enterContext(patch.object(local, 'SOURCES', (self.source,)))
-        self.clock = self.enterContext(patch('local_analysis.time.monotonic', return_value=1000))
-        self.fetch = self.enterContext(patch('local_analysis.fetch_source', return_value=self.document))
+        self._contexts.enter_context(patch.dict(local._SOURCE_CACHE, {}, clear=True))
+        self._contexts.enter_context(patch.object(local, 'SOURCES', (self.source,)))
+        self.clock = self._contexts.enter_context(patch('local_analysis.time.monotonic', return_value=1000))
+        self.fetch = self._contexts.enter_context(patch('local_analysis.fetch_source', return_value=self.document))
 
     def test_success_reused_until_ten_minutes_with_original_retrieval_time(self):
         first = local.retrieve_sources()[0]
