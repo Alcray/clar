@@ -1,0 +1,58 @@
+{
+  "manifest_version": 3,
+  "name": "CLAR \u2014 Facebook post checker",
+  "version": "0.5.1",
+  "minimum_chrome_version": "141",
+  "description": "Check Facebook posts against evidence and explain opinions, persuasion cues, and apparent purpose.",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxnpXIWxk70qBoIUemFMo6KGcnnvoQJXjnk9kfEKc3Zp+oZ2ZjTHihwP0c7mg0wu9bq8hkFu1/nKinf7NAIaUxA42pKsqjTSsJt/diXRKlx9DrAzgA5vDKz92ILHf4sJG3QsKyGNIaeZiUxKKbkHGmzW7G2e36/B9fzVirsRWSjzqd5QztnEsFBxAZY+NRUZ6RRedzoJh/ACjbMlyRkwYWxj8j7k+6RI8rJ4VBBQCkKC+/hKfADaQP0+qCQpSw9VnBkN0mnP8Up6Kd7K4lcCXbEyovv2RhQiBHyHRnEwu43bbCtS4B+368kmZYkk51so3euWlq/WoacSuRRb9iFeuKQIDAQAB",
+  "permissions": [
+    "sidePanel",
+    "storage",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:8765/*",
+    "http://localhost:8765/*",
+    "https://*.fbcdn.net/*",
+    "https://www.facebook.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Open CLAR",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png",
+      "48": "icons/48.png",
+      "128": "icons/128.png"
+    }
+  },
+  "side_panel": {
+    "default_path": "panel.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.facebook.com/*"
+      ],
+      "js": [
+        "presentation.js",
+        "selectors.js",
+        "content.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.fbcdn.net https://www.gstatic.com; connect-src http://127.0.0.1:8765 http://localhost:8765 https://*.fbcdn.net; frame-src 'self'; base-uri 'none'"
+  },
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  }
+}

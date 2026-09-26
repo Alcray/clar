@@ -1,0 +1,30 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CLAR · Facebook</title><link rel="stylesheet" href="panel.css"><link rel="stylesheet" href="results.css"><script type="module" src="panel.js"></script></head><body>
+<header><div class="brand"><img src="logo.svg" alt="" width="29" height="29"><strong>CLAR.</strong><span>FACEBOOK</span></div><button id="settings-toggle" class="quiet">Settings</button></header>
+<main>
+  <div id="connection" class="connection" role="status">Connecting to CLAR…</div>
+  <section id="settings" class="box" hidden>
+    <h2>Connect your extension</h2><p>The pairing code connects to your private CLAR server. Your model API key stays on the server.</p>
+    <form id="settings-form"><label>Server<select id="backend" aria-describedby="backend-help"></select></label><p id="backend-help" class="secondary">These servers were configured by whoever built this extension. To use another server, ask its operator for a matching extension build.</p>
+    <a id="pair-link" target="_blank" rel="noopener noreferrer">Get a pairing code ↗</a>
+    <label>Pairing code<input id="pair-token" type="password" autocomplete="off" placeholder="Paste the code from CLAR"></label>
+    <div class="row"><label>Model<select id="provider"><option value="local">Local model</option><option value="vertex">Gemini · Vertex AI</option><option value="gemini">Gemini API</option></select></label><label>Explain in<select id="language"><option value="en">English</option><option value="ro">Română</option><option value="ru">Русский</option></select></label></div>
+    <label class="check-option"><input id="auto-scan" type="checkbox">Auto-scan visible Facebook posts</label><p class="check-disclosure">Off by default. When enabled, visible post text and its displayed source are sent for a preliminary reading. Each new scan uses your review allowance. Factual verification still requires opening the full check.</p><label class="check-option"><input id="show-highlights" type="checkbox" checked>Underline persuasion cues in the post</label><div class="cache-controls"><button id="clear-cache" class="secondary-button" type="button">Clear saved checks</button><p id="cache-status">Results are cached on this device for 24 hours. Screenshots are not cached.</p></div><button class="primary" type="submit">Save connection</button></form>
+  </section>
+  <div id="error" class="error" role="alert" hidden></div><button id="panel-retry-button" class="secondary-button" type="button" hidden>Retry check</button>
+  <section id="empty" class="empty"><p class="eyebrow">FULL ANALYSIS</p><h1>Understand the evidence.</h1><p>Click <strong>Analyze</strong> under a Facebook post for a quick assessment. Choose <strong>Full analysis</strong> on its result card to review claims, sources, and persuasion cues here.</p><p class="secondary">If a control is missing, select text inside a post and use the CLAR right-click menu. You can also paste one post below.</p><button class="secondary-button" id="paste-button">Paste a post</button></section>
+  <section id="composer" hidden>
+    <div class="section-heading"><h2>Selected post</h2><button id="clear-button" class="quiet">Clear</button></div>
+    <a id="post-link" class="post-link" target="_blank" rel="noopener noreferrer" hidden>Open original post ↗</a>
+    <p id="truncated" class="notice" hidden>This check uses the visible part of the post. Expand “See more” on Facebook, then click CLAR again to check the full text.</p>
+    <div id="mode-tabs" class="tabs" hidden><button id="text-mode" type="button" aria-pressed="true">Post text</button><button id="image-mode" type="button" aria-pressed="false">Attached photo</button></div>
+    <label id="text-label" class="sr-only" for="post-text">Selected post text</label><textarea id="post-text" maxlength="6000" placeholder="Paste one Facebook post…"></textarea>
+    <div id="image-wrap" hidden><img id="post-image" alt="The photo attached to the selected post"><p class="secondary">This checks the text visible in the photo. It does not authenticate the photograph.</p></div>
+    <div class="post-meta"><span id="char-count">0 / 6,000</span><span id="date-hint"></span></div>
+    <label>Post date, if known<input id="post-date" type="date"></label>
+    <button id="analyze-button" class="primary" type="button">Check this post</button>
+    <p id="privacy" class="privacy">Only this selected text or photo is sent to your CLAR server. With Vertex selected, Gemini and Google Search process the check.</p>
+  </section>
+  <section id="loading" class="loading" role="status" hidden><span class="spinner"></span><h2>Checking the evidence</h2><p>Checking the claims and sources, plus the post’s purpose and persuasion cues.</p><div id="panel-progress"></div><button id="stop-button" class="quiet">Stop waiting</button></section>
+  <section id="results" hidden></section>
+</main><footer><span>Check the evidence. Notice the framing. Decide for yourself.</span><a id="feedback-link" target="_blank" rel="noopener noreferrer">Send feedback ↗</a></footer>
+</body></html>

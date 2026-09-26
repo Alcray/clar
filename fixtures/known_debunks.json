@@ -1,0 +1,189 @@
+[
+  {
+    "id": "stopfals-democracy-181559",
+    "outlet": "StopFals",
+    "date": "2026-09-19",
+    "verdict": "MISLEADING",
+    "publisher_verdict": "",
+    "title": "Concluziile unui raport despre indicatori democratici, folosite pentru a manipula despre „prăbușirea democrației” în R. Moldova",
+    "url": "https://stopfals.md/ro/article/concluziile-unui-raport-despre-indicatori-democratici-folosite-pentru-a-manipula-despre-prabusirea-democratiei-in-r-moldova-181559",
+    "claim": "Moldova’s democracy collapsed across all international indicators.",
+    "summary": "The IDEA 2026 report uses 2025 data. Moldova has mixed changes, not deterioration in every category; the article contrasts rank with scores and notes improvements across the preceding five years.",
+    "scope": "Claims of collapse across all indicators based on the IDEA 2026 report, data year 2025. Does not prove that every criticism of Moldovan democracy is false.",
+    "keyword_groups": [
+      [
+        "moldov",
+        "молдов"
+      ],
+      [
+        "democra",
+        "демократ"
+      ],
+      [
+        "collaps",
+        "prabus",
+        "regres",
+        "indicat",
+        "ranking",
+        "clasament",
+        "крах",
+        "рухнул",
+        "показател",
+        "рейтинг"
+      ]
+    ],
+    "verified_at": "2026-09-26",
+    "retrieval": "manually_verified_publisher_article",
+    "fixture_is_evidence_candidate": true,
+    "rating_note": "MISLEADING is CLAR’s editorial normalization of the article’s reasoning; the publisher does not display a formal MISLEADING rating.",
+    "summary_translations": {
+      "ro": "Raportul IDEA 2026 utilizează date din 2025. Moldova înregistrează evoluții mixte, nu deteriorări la fiecare categorie; articolul distinge pozițiile în clasament de punctaje și menționează progresele din ultimii cinci ani.",
+      "ru": "Доклад IDEA 2026 использует данные за 2025 год. В Молдове наблюдаются разнонаправленные изменения, а не ухудшение всех категорий; статья различает места в рейтинге и баллы и отмечает прогресс за предыдущие пять лет."
+    },
+    "scope_translations": {
+      "ro": "Afirmații despre prăbușirea tuturor indicatorilor pe baza raportului IDEA 2026, cu date din 2025. Nu dovedește că orice critică a democrației moldovenești este falsă.",
+      "ru": "Утверждения об обвале всех показателей на основании доклада IDEA 2026 с данными за 2025 год. Не доказывает ложность любой критики молдавской демократии."
+    }
+  },
+  {
+    "id": "stopfals-gagauzia-181558",
+    "outlet": "StopFals",
+    "date": "2026-09-17",
+    "verdict": "MISLEADING",
+    "publisher_verdict": "",
+    "title": "Solicitarea privind cunoașterea limbii române de către bașcan: cum este prezentată pe rețele sociale și ce spune legea",
+    "url": "https://stopfals.md/ro/article/solicitarea-privind-cunoasterea-limbii-romane-de-catre-bascan-cum-este-prezentata-pe-retele-sociale-si-ce-spune-legea-181558",
+    "claim": "The Romanian-language requirement for Gagauzia’s governor is a filter to exclude disfavoured candidates.",
+    "summary": "Romanian and Gagauz knowledge is required by law, but no separate examination or prescribed fluency level is imposed. Registration involves a handwritten declaration and discussion; voters still elect the governor.",
+    "scope": "September 2026 election rules. Criticism, concerns, or predictions about potential abuse must not be converted into a proven false factual allegation.",
+    "keyword_groups": [
+      [
+        "gagauz",
+        "bascan",
+        "гагауз",
+        "башкан"
+      ],
+      [
+        "roman",
+        "language",
+        "lingv",
+        "румын",
+        "язык"
+      ],
+      [
+        "filter",
+        "filtru",
+        "exclu",
+        "elimin",
+        "ghilotin",
+        "фильтр",
+        "отсеч",
+        "неугод"
+      ]
+    ],
+    "verified_at": "2026-09-26",
+    "retrieval": "manually_verified_publisher_article",
+    "fixture_is_evidence_candidate": true,
+    "rating_note": "MISLEADING is CLAR’s editorial normalization of the article’s reasoning; the publisher does not display a formal MISLEADING rating.",
+    "summary_translations": {
+      "ro": "Legea cere cunoașterea limbilor română și găgăuză, dar nu impune un examen separat sau un nivel de fluență prestabilit. Înregistrarea presupune o declarație scrisă de mână și o discuție; bașcanul este ales de alegători.",
+      "ru": "Закон требует знания румынского и гагаузского языков, но не вводит отдельный экзамен или заданный уровень владения. Регистрация включает рукописное заявление и беседу; башкана по-прежнему избирают граждане."
+    },
+    "scope_translations": {
+      "ro": "Regulile electorale din septembrie 2026. Criticile, îngrijorările sau previziunile despre posibile abuzuri nu trebuie transformate în afirmații factuale dovedit false.",
+      "ru": "Избирательные правила сентября 2026 года. Критику, опасения или прогнозы возможных злоупотреблений нельзя превращать в доказанно ложные фактические утверждения."
+    }
+  },
+  {
+    "id": "stopfals-gas-181552",
+    "outlet": "StopFals",
+    "date": "2026-09-11",
+    "verdict": "FALSE",
+    "publisher_verdict": "FALS",
+    "title": "FALS: În R. Moldova gazele sunt mai scumpe comparativ cu țările europene",
+    "url": "https://stopfals.md/ro/article/fals-in-r-moldova-gazele-sunt-mai-scumpe-comparativ-cu-tarile-europene-181552",
+    "claim": "Moldovans pay more for gas than most European Union countries.",
+    "summary": "StopFals rejects the circulating comparison of household gas prices. The underlying post omitted data sources and methods; comparable units, taxes, subsidies and time periods matter.",
+    "scope": "The comparison circulating in September 2026. Does not settle future prices, affordability relative to wages, electricity prices, or every pairwise country comparison.",
+    "keyword_groups": [
+      [
+        "moldov",
+        "молдов"
+      ],
+      [
+        "gas",
+        "gaz",
+        "газ"
+      ],
+      [
+        "eu",
+        "europ",
+        "европ",
+        "ес"
+      ],
+      [
+        "more",
+        "scump",
+        "majo",
+        "most",
+        "дорог",
+        "большин"
+      ]
+    ],
+    "verified_at": "2026-09-26",
+    "retrieval": "manually_verified_publisher_article",
+    "fixture_is_evidence_candidate": true,
+    "rating_note": "CLAR normalizes the publisher’s explicit rating, preserved separately in publisher_verdict.",
+    "summary_translations": {
+      "ro": "StopFals respinge comparația răspândită despre prețurile gazelor pentru gospodării. Postarea inițială omitea sursele și metodologia; contează unitățile comparabile, taxele, subvențiile și perioadele analizate.",
+      "ru": "StopFals опровергает распространяемое сравнение цен на газ для населения. Исходная публикация не указывала источники и методику; важны сопоставимые единицы, налоги, субсидии и периоды."
+    },
+    "scope_translations": {
+      "ro": "Comparația răspândită în septembrie 2026. Nu stabilește prețurile viitoare, accesibilitatea raportată la salarii, prețurile electricității sau orice comparație între două țări.",
+      "ru": "Сравнение, распространявшееся в сентябре 2026 года. Не определяет будущие цены, доступность относительно зарплат, цены на электричество или любое сравнение двух стран."
+    }
+  },
+  {
+    "id": "stopfals-otifonex-181556",
+    "outlet": "StopFals",
+    "date": "2026-09-16",
+    "verdict": "FALSE",
+    "publisher_verdict": "ÎNȘELĂTORIE",
+    "title": "Înșelătorie pe Facebook despre „restabilirea auzului fără operație”",
+    "url": "https://stopfals.md/ro/article/inselatorie-pe-facebook-despre-restabilirea-auzului-fara-operatie-181556",
+    "claim": "Otifonex restores hearing overnight without surgery.",
+    "summary": "StopFals identifies Otifonex miracle-hearing advertisements as a scam, including fabricated endorsements. Its warning concerns that named campaign; it does not establish that every hearing treatment or advertisement is fraudulent.",
+    "scope": "Promotions of the named Otifonex overnight or surgery-free hearing restoration scheme; distinguish warnings about the scam from promotions.",
+    "keyword_groups": [
+      [
+        "otifonex",
+        "отифонекс"
+      ],
+      [
+        "hearing",
+        "auz",
+        "слух"
+      ],
+      [
+        "night",
+        "noapte",
+        "ноч",
+        "surgery",
+        "operat",
+        "операц"
+      ]
+    ],
+    "verified_at": "2026-09-26",
+    "retrieval": "manually_verified_publisher_article",
+    "fixture_is_evidence_candidate": true,
+    "rating_note": "CLAR normalizes the publisher’s explicit rating, preserved separately in publisher_verdict.",
+    "summary_translations": {
+      "ro": "StopFals identifică reclamele pentru refacerea miraculoasă a auzului cu Otifonex drept înșelătorie, inclusiv recomandări fabricate. Avertizarea privește campania numită, nu orice tratament al auzului sau reclamă.",
+      "ru": "StopFals называет рекламу чудесного восстановления слуха средством Otifonex мошенничеством, включая сфабрикованные рекомендации. Предупреждение относится к этой кампании, а не к любому лечению слуха или рекламе."
+    },
+    "scope_translations": {
+      "ro": "Promovarea schemei Otifonex de refacere a auzului peste noapte sau fără operație; avertizările despre înșelătorie trebuie deosebite de promovare.",
+      "ru": "Продвижение схемы Otifonex с восстановлением слуха за ночь или без операции; предупреждения о мошенничестве следует отличать от рекламы."
+    }
+  }
+]

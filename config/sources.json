@@ -1,0 +1,47 @@
+{
+  "official_domains": [
+    "gov.md",
+    "presedinte.md",
+    "parlament.md",
+    "cec.md",
+    "statistica.gov.md",
+    "bnm.md",
+    "anre.md",
+    "mfa.gov.md",
+    "mai.gov.md",
+    "moldpres.md",
+    "legis.md"
+  ],
+  "fact_checker_domains": [
+    "stopfals.md",
+    "watchdog.md",
+    "veridica.ro",
+    "edmo.eu",
+    "dfrlab.org"
+  ],
+  "media_domains": [
+    "ipn.md",
+    "zdg.md",
+    "newsmaker.md",
+    "tvrmoldova.md",
+    "europalibera.org",
+    "agora.md"
+  ],
+  "facebook_pages": [
+    {
+      "name": "Guvernul Republicii Moldova",
+      "url": "https://www.facebook.com/GuvernulRepubliciiMoldova",
+      "type": "official",
+      "verified_from": "https://gov.md/ro",
+      "verified_at": "2026-09-26"
+    },
+    {
+      "name": "Președinția Republicii Moldova",
+      "url": "https://www.facebook.com/presedinte.md",
+      "type": "official",
+      "verified_from": "https://presedinte.md/",
+      "verified_at": "2026-09-26"
+    }
+  ],
+  "notes": "Domains guide retrieval, not truth. Page URLs were read from the linked official sites; names alone never establish identity. Add canonical Facebook profile URLs only after verifying them from an official publisher site."
+}

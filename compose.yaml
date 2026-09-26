@@ -1,0 +1,74 @@
+name: clar
+services:
+  clar:
+    build:
+      context: .
+      args:
+        CLAR_BACKEND: ${CLAR_BACKEND:-http://localhost:8765}
+        CLAR_EXTENSION_PROVIDER: ${DEFAULT_PROVIDER:-local}
+    image: clar:local
+    restart: unless-stopped
+    init: true
+    ports:
+      - "${CLAR_BIND_IP:-127.0.0.1}:${CLAR_PORT:-8765}:8765"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      HOST: 0.0.0.0
+      PORT: 8765
+      PUBLIC_MODE: 1
+      CLAR_LOAD_DOTENV: 0
+      CLAR_RUNTIME_DIR: /data
+      CLAR_INVITES_FILE: /data/invites.json
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1,::1}
+      DEFAULT_PROVIDER: ${DEFAULT_PROVIDER:-local}
+      LOCAL_PROVIDER: ${LOCAL_PROVIDER:-ollama}
+      LOCAL_MODEL: ${LOCAL_MODEL:-qwen2.5vl:3b}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - clar-runtime:/data
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 128
+    mem_limit: 1g
+    stop_grace_period: 45s
+
+  # Optional NVIDIA GPU inference server. No model/API port is exposed to host.
+  # Set OLLAMA_BASE_URL=http://ollama:11434 in .env before enabling this profile.
+  ollama:
+    image: ${OLLAMA_IMAGE:-ollama/ollama:0.34.4}
+    profiles: [gpu]
+    restart: unless-stopped
+    init: true
+    volumes:
+      - ollama-models:/root/.ollama
+    environment:
+      OLLAMA_HOST: 0.0.0.0:11434
+      OLLAMA_NUM_PARALLEL: 1
+      OLLAMA_MAX_LOADED_MODELS: 1
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    healthcheck:
+      test: [CMD, ollama, list]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    security_opt:
+      - no-new-privileges:true
+    stop_grace_period: 30s
+
+volumes:
+  clar-runtime:
+  ollama-models:

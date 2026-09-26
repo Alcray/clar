@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>CLAR content analysis fixture</title>
+<style>body{margin:0;padding:12px;background:#eef1f6;font:16px/1.5 system-ui}main{max-width:660px;margin:auto}article{padding:15px;margin:8px;background:white}h3{margin:0}p{margin:4px}.spacer{height:1500px}button{font:inherit}</style></head><body><main role="feed">
+<article id="first" role="article">
+  <h3><a href="/groups/moldova/">Moldova discussion</a> · <a href="/reader?tracking=ignored">Example reader</a></h3>
+  <a href="/reader/posts/101?tracking=ignored"><time>Today</time></a>
+  <div data-ad-preview="message">Everyone   knows <strong>the truth</strong> and we should read the original evidence before making a claim about what happened today. <a href="https://example.com">Linked quotation is interactive</a><button>Like</button></div>
+  <article role="article" data-commentid="one"><div data-ad-preview="message">Private comment should never receive any highlights or be uploaded even when it repeats Everyone knows the truth.</div></article>
+</article>
+<article id="second" role="article"><h3><a href="/second">Second reader</a></h3><a href="/second/posts/102">Today</a><div data-ad-preview="message">This is another post containing enough visible words to qualify for the optional automatic reading analysis in this isolated fixture.</div></article>
+<article id="third" role="article"><h3><a href="/third">Third reader</a></h3><a href="/third/posts/103">Today</a><div data-ad-preview="message">A third visible post also contains enough words and should queue politely behind the other requests while they are still pending.</div></article>
+<article id="short" role="article"><h3>Short reader</h3><div data-ad-preview="message">Too short for automatic scanning.</div></article>
+<article id="truncated" role="article"><h3>Truncated reader</h3><div data-ad-preview="message">A long enough but incomplete visible post should wait for the reader to expand the full text before an automatic scan.<button>See more</button></div></article>
+<div class="spacer"></div>
+<article id="offscreen" role="article"><h3><a href="/fourth">Offscreen reader</a></h3><a href="/fourth/posts/104">Today</a><div data-ad-preview="message">This post is outside the viewport and must only be scanned after someone actually scrolls down to see its contents in the feed.</div></article>
+</main></body></html>

@@ -1,0 +1,18 @@
+{
+  "name": "clar-media-literacy",
+  "version": "0.5.1",
+  "private": true,
+  "description": "Isolated browser regression checks for the CLAR extension and shared UI",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test:unit": "node tests/presentation.test.mjs && node tests/client.test.mjs && node tests/extension-cache.test.mjs",
+    "test:browser": "node tests/results-ui.test.mjs && node tests/content.test.mjs && node tests/content-analysis.test.mjs && node tests/content-compact.test.mjs && node tests/extension-autocheck.test.mjs && node tests/extension-panel-race.test.mjs && node tests/extension-feed.test.mjs && node tests/extension-queue.test.mjs && node tests/extension-transport.test.mjs && node tests/media-literacy-ui.test.mjs && node tests/share-ui.test.mjs && node tests/selfhost-extension.test.mjs",
+    "test": "npm run test:unit && npm run test:browser"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  },
+  "type": "module"
+}

@@ -1,0 +1,35 @@
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+.runtime/
+.venv/
+.DS_Store
+node_modules/
+dist/
+playwright-report/
+test-results/
+
+# Local tooling and generated distributions/results.
+node_modules/
+dist/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+/public/clar-extension.zip
+/benchmarks/runs/
+# Private infrastructure and reviewer workflow stay in the operator's checkout.
+/deploy/run-preview.sh
+/deploy/rtx3070.yaml
+/deploy/clar-gateway.service
+/deploy/public_gateway.py
+/tests/test_public_gateway.py
+/tests/public-live-smoke.mjs
+/tests/extension-public-live-smoke.mjs
+/tests/extension.test.mjs
+/docs/CLAR-REVIEW-TRACKER.md
+/docs/CLAR-REVIEW-BRIEF.md
+/tools/export_feedback.py
+/tools/evaluate_live.py

@@ -1,0 +1,14 @@
+# Set PUBLIC_MODE=1, PUBLIC_HOST=clar.example.org and
+# ALLOWED_HOSTS=localhost,127.0.0.1,clar.example.org on the application.
+# Keep its published port on 127.0.0.1. Caddy supplies automatic HTTPS.
+clar.example.org {
+    request_body {
+        max_size 8MB
+    }
+    reverse_proxy 127.0.0.1:8765 {
+        transport http {
+            dial_timeout 5s
+            response_header_timeout 310s
+        }
+    }
+}

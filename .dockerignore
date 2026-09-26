@@ -1,0 +1,30 @@
+# Allowlist build inputs. Credentials, runtime records, private deployment files,
+# repository history and local screenshots never enter the Docker build context.
+*
+!Dockerfile
+!requirements.txt
+!requirements-server.txt
+!LICENSE
+!NOTICE
+!*.py
+!config/
+!config/**
+!fixtures/
+!fixtures/**
+!benchmarks/
+!benchmarks/**
+!public/
+!public/**
+!shared/
+!shared/**
+!extension/
+!extension/**
+!tools/
+!tools/build_extension.py
+**/.DS_Store
+**/__pycache__
+**/*.pyc
+**/.env*
+**/.runtime/**
+**/*.pem
+**/*.key

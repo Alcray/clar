@@ -1,0 +1,110 @@
+[
+  {
+    "id": "stopfals-democracy-181559",
+    "text": "Moldova’s democracy collapsed across all international indicators.",
+    "language": "en",
+    "post_date": "2026-09-26",
+    "expected_label": "MISLEADING",
+    "fact_check_url": "https://stopfals.md/ro/article/concluziile-unui-raport-despre-indicatori-democratici-folosite-pentru-a-manipula-despre-prabusirea-democratiei-in-r-moldova-181559",
+    "expected_commercial_purpose": null,
+    "kind": "evaluation_input_not_a_captured_facebook_post"
+  },
+  {
+    "id": "stopfals-democracy-181559-refutation",
+    "text": "It is not true that Moldova’s democracy collapsed across all international indicators.",
+    "language": "en",
+    "post_date": "2026-09-26",
+    "must_not_inherit_fact_check_verdict": true,
+    "fact_check_url": "https://stopfals.md/ro/article/concluziile-unui-raport-despre-indicatori-democratici-folosite-pentru-a-manipula-despre-prabusirea-democratiei-in-r-moldova-181559"
+  },
+  {
+    "id": "stopfals-gagauzia-181558",
+    "text": "The Romanian-language requirement for Gagauzia’s governor is a filter to exclude disfavoured candidates.",
+    "language": "en",
+    "post_date": "2026-09-26",
+    "expected_label": "MISLEADING",
+    "fact_check_url": "https://stopfals.md/ro/article/solicitarea-privind-cunoasterea-limbii-romane-de-catre-bascan-cum-este-prezentata-pe-retele-sociale-si-ce-spune-legea-181558",
+    "expected_commercial_purpose": null,
+    "kind": "evaluation_input_not_a_captured_facebook_post",
+    "acceptable_labels": [
+      "OPINION",
+      "MISLEADING"
+    ],
+    "evaluation_note": "A motive interpretation may remain OPINION with related legal context. A sourced factual interpretation may be MISLEADING; do not force a factual verdict merely to meet the suggested demo label."
+  },
+  {
+    "id": "stopfals-gagauzia-181558-refutation",
+    "text": "It is not true that The Romanian-language requirement for Gagauzia’s governor is a filter to exclude disfavoured candidates.",
+    "language": "en",
+    "post_date": "2026-09-26",
+    "must_not_inherit_fact_check_verdict": true,
+    "fact_check_url": "https://stopfals.md/ro/article/solicitarea-privind-cunoasterea-limbii-romane-de-catre-bascan-cum-este-prezentata-pe-retele-sociale-si-ce-spune-legea-181558"
+  },
+  {
+    "id": "stopfals-gas-181552",
+    "text": "Moldovans pay more for gas than most European Union countries.",
+    "language": "en",
+    "post_date": "2026-09-26",
+    "expected_label": "FALSE",
+    "fact_check_url": "https://stopfals.md/ro/article/fals-in-r-moldova-gazele-sunt-mai-scumpe-comparativ-cu-tarile-europene-181552",
+    "expected_commercial_purpose": null,
+    "kind": "evaluation_input_not_a_captured_facebook_post"
+  },
+  {
+    "id": "stopfals-gas-181552-refutation",
+    "text": "It is not true that Moldovans pay more for gas than most European Union countries.",
+    "language": "en",
+    "post_date": "2026-09-26",
+    "must_not_inherit_fact_check_verdict": true,
+    "fact_check_url": "https://stopfals.md/ro/article/fals-in-r-moldova-gazele-sunt-mai-scumpe-comparativ-cu-tarile-europene-181552"
+  },
+  {
+    "id": "stopfals-otifonex-181556",
+    "text": "Otifonex restores hearing overnight without surgery.",
+    "language": "en",
+    "post_date": "2026-09-26",
+    "expected_label": "FALSE",
+    "fact_check_url": "https://stopfals.md/ro/article/inselatorie-pe-facebook-despre-restabilirea-auzului-fara-operatie-181556",
+    "expected_commercial_purpose": "sell",
+    "kind": "evaluation_input_not_a_captured_facebook_post"
+  },
+  {
+    "id": "stopfals-otifonex-181556-refutation",
+    "text": "It is not true that Otifonex restores hearing overnight without surgery.",
+    "language": "en",
+    "post_date": "2026-09-26",
+    "must_not_inherit_fact_check_verdict": true,
+    "fact_check_url": "https://stopfals.md/ro/article/inselatorie-pe-facebook-despre-restabilirea-auzului-fara-operatie-181556"
+  },
+  {
+    "id": "gas-ro",
+    "text": "În Moldova gazele sunt mai scumpe decât în majoritatea țărilor europene.",
+    "language": "ro",
+    "post_date": "2026-09-26",
+    "expected_label": "FALSE",
+    "fact_check_url": "https://stopfals.md/ro/article/fals-in-r-moldova-gazele-sunt-mai-scumpe-comparativ-cu-tarile-europene-181552"
+  },
+  {
+    "id": "gas-ru",
+    "text": "В Молдове газ дороже, чем в большинстве стран Европы.",
+    "language": "ru",
+    "post_date": "2026-09-26",
+    "expected_label": "FALSE",
+    "fact_check_url": "https://stopfals.md/ro/article/fals-in-r-moldova-gazele-sunt-mai-scumpe-comparativ-cu-tarile-europene-181552"
+  },
+  {
+    "id": "government-control",
+    "text": "La 25 septembrie 2026, CNMC a aprobat măsuri pentru continuitatea aprovizionării cu energie electrică, gaze naturale și carburanți.",
+    "language": "ro",
+    "post_date": "2026-09-25",
+    "origin": {
+      "poster_name": "Guvernul Republicii Moldova",
+      "poster_url": "https://www.facebook.com/GuvernulRepubliciiMoldova",
+      "context": "page"
+    },
+    "expected_label": "VERIFIED_FACT",
+    "source_url": "https://gov.md/ro/comunicate-de-presa/comisia-nationala-de-management-al-crizelor-aprobat-noi-masuri-pentru",
+    "kind": "evaluation_input_paraphrasing_verified_official_announcement_not_a_captured_facebook_post",
+    "verified_at": "2026-09-26"
+  }
+]

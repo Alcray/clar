@@ -1,0 +1,44 @@
+{
+  "models": [
+    {
+      "name": "flash-low",
+      "provider": "vertex",
+      "model": "gemini-3.5-flash",
+      "api_key_env": "VERTEX_API_KEY",
+      "timeout_seconds": 45,
+      "max_output_tokens": 4096,
+      "thinking": "low",
+      "temperature": null
+    },
+    {
+      "name": "flash-lite-minimal",
+      "provider": "vertex",
+      "model": "gemini-3.5-flash-lite",
+      "api_key_env": "VERTEX_API_KEY",
+      "timeout_seconds": 45,
+      "max_output_tokens": 4096,
+      "thinking": "minimal",
+      "temperature": null
+    },
+    {
+      "name": "qwen-vl-local",
+      "provider": "ollama",
+      "model": "qwen2.5vl:3b",
+      "endpoint": "http://127.0.0.1:11434",
+      "timeout_seconds": 120,
+      "max_output_tokens": 4096,
+      "context_tokens": 8192,
+      "temperature": 0
+    },
+    {
+      "name": "openai-compatible-local",
+      "provider": "openai",
+      "model": "your-served-model-id",
+      "endpoint": "http://127.0.0.1:8000/v1",
+      "api_key_env": "LOCAL_MODEL_API_KEY",
+      "timeout_seconds": 120,
+      "max_output_tokens": 4096,
+      "temperature": 0
+    }
+  ]
+}
