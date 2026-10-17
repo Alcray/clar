@@ -1,2 +1,2 @@
 # Optional local-mode parsing of the official Constitution PDF.
-pypdf==6.19.0
+pypdf==6.20.1
